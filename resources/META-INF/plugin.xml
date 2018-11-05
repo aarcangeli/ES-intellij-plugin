@@ -18,6 +18,10 @@
         <!-- The file type factory link a file pattern (*.es) to an instance of file type -->
         <!-- The file type define the file in the editor (File->Settings->Editor->File Types->Serious Engine ES file) -->
         <fileTypeFactory implementation="com.github.aarcangeli.esj.CFileType$Factory"/>
+
+        <!-- The syntax highlighter is the first type of integration -->
+        <!-- It link every type of token with his color -->
+        <lang.syntaxHighlighterFactory language="SE1-ES" implementationClass="com.github.aarcangeli.esj.CHighlighter$Factory"/>
     </extensions>
 
     <actions>
