@@ -15,6 +15,8 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- The file type factory link a file pattern (*.es) to an instance of file type -->
+        <!-- The file type define the file in the editor (File->Settings->Editor->File Types->Serious Engine ES file) -->
         <fileTypeFactory implementation="com.github.aarcangeli.esj.CFileType$Factory"/>
     </extensions>
 

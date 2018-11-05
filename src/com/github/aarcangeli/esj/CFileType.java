@@ -40,6 +40,11 @@ public class CFileType extends LanguageFileType {
         return CIcons.ES_FILE;
     }
 
+    @Override
+    public String toString() {
+        return getDescription();
+    }
+
     public static class Factory extends FileTypeFactory {
         @Override
         public void createFileTypes(@NotNull FileTypeConsumer fileTypeConsumer) {
