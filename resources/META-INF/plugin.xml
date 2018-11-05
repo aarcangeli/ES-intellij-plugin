@@ -15,11 +15,10 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <fileTypeFactory implementation="com.github.aarcangeli.esj.CFileType$Factory"/>
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
     </actions>
 
 </idea-plugin>
