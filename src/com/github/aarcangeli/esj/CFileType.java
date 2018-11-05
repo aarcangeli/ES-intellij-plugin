@@ -1,5 +1,6 @@
 package com.github.aarcangeli.esj;
 
+import com.github.aarcangeli.esj.icons.CIcons;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 import com.intellij.openapi.fileTypes.LanguageFileType;
@@ -36,7 +37,7 @@ public class CFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return null;
+        return CIcons.ES_FILE;
     }
 
     public static class Factory extends FileTypeFactory {
