@@ -1,16 +1,15 @@
 package com.github.aarcangeli.esj.psi.parser;
 
+import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_ENUM_FIELD;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_ENUM_STATEMENT;
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.eatGarbage;
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.reportExtraComma;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
-public class CEnumParser {
+public class CEnumParser implements CElementTypes {
     public static final TokenSet NOT_GARBAGE = TokenSet.create(C_INT, IDENTIFIER, C_STRING, COMMA);
     public static final TokenSet ENUM_FIELD_START = TokenSet.create(C_INT, IDENTIFIER, C_STRING);
 

@@ -5,7 +5,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_CPP_BLOCK;
+import static com.github.aarcangeli.esj.psi.CElementTypes.SE_CPP_BLOCK;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CParserUtils {

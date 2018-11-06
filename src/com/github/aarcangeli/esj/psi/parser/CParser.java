@@ -1,5 +1,6 @@
 package com.github.aarcangeli.esj.psi.parser;
 
+import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
@@ -8,13 +9,11 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_CLASS_ID;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_USE_STATEMENT;
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.*;
 import static com.intellij.lang.PsiBuilder.Marker;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
-public class CParser implements PsiParser {
+public class CParser implements PsiParser, CElementTypes {
     public static final CParser INSTANCE = new CParser();
 
     public static final TokenSet SET_STATEMENT_START = TokenSet.create(CPP_BLOCK_BEGIN, K_USES, K_ENUM, K_EVENT, K_CLASS);

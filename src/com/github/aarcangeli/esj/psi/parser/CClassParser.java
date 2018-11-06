@@ -1,14 +1,16 @@
 package com.github.aarcangeli.esj.psi.parser;
 
+import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.PsiBuilder;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
-public class CClassParser {
+public class CClassParser implements CElementTypes {
 
     static void parseClass(PsiBuilder builder) {
         assert builder.getTokenType() == K_CLASS;
+        PsiBuilder.Marker statement = builder.mark();
         builder.advanceLexer();
         expect(builder, K_EXPORT);
 
@@ -33,6 +35,7 @@ public class CClassParser {
         if (!expect(builder, SEMICOLON)) {
             builder.error("';' expected");
         }
+        statement.done(SE_CLASS_STATEMENT);
     }
 
     private static void parseClassBody(PsiBuilder builder) {

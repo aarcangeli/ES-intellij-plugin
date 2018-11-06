@@ -1,16 +1,15 @@
 package com.github.aarcangeli.esj.psi.parser;
 
+import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_EVENT_FIELD;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_EVENT_STATEMENT;
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.eatGarbage;
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.reportExtraComma;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
-public class CEventParser {
+public class CEventParser implements CElementTypes {
     public static final TokenSet NOT_GARBAGE = TokenSet.orSet(CTypeParser.TYPE_START, TokenSet.create(COMMA));
     public static final TokenSet EVENT_FIELD_START = CTypeParser.TYPE_START;
 

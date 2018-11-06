@@ -34,7 +34,7 @@ public class CParserDefinition implements ParserDefinition {
 
     @Override
     public IFileElementType getFileNodeType() {
-        return CElementType.SE_FILE;
+        return CElementTypes.SE_FILE;
     }
 
     @NotNull

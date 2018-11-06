@@ -1,14 +1,13 @@
 package com.github.aarcangeli.esj.psi.parser;
 
+import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_TYPE;
-import static com.github.aarcangeli.esj.psi.CElementType.SE_TYPE_MODIFIERS;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
-public class CTypeParser {
+public class CTypeParser implements CElementTypes {
     public static final TokenSet SET_TYPES = TokenSet.create(IDENTIFIER, K_CTSTRING, K_CTSTRINGTRANS, K_CTFILENAME,
             K_CTFILENAMENODEP, K_BOOL, K_COLOR, K_FLOAT, K_INDEX, K_RANGE, K_CENTITYPOINTER, K_CMODELOBJECT,
             K_CMODELINSTANCE, K_CANIMOBJECT, K_CSOUNDOBJECT, K_CPLACEMENT3D, K_FLOATAABBOX3D, K_FLOATMATRIX3D,

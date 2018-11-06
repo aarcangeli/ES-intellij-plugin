@@ -4,7 +4,7 @@ import com.github.aarcangeli.esj.CLanguage;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 
-public interface CElementType {
+public interface CElementTypes {
     IFileElementType SE_FILE = new IFileElementType("SE_FILE", CLanguage.INSTANCE);
 
     // commons
@@ -19,6 +19,7 @@ public interface CElementType {
     IElementType SE_USE_STATEMENT = new CCompositeElementType("SE_USE_STATEMENT");
     IElementType SE_ENUM_STATEMENT = new CCompositeElementType("SE_ENUM_STATEMENT");
     IElementType SE_EVENT_STATEMENT = new CCompositeElementType("SE_EVENT_STATEMENT");
+    IElementType SE_CLASS_STATEMENT = new CCompositeElementType("SE_CLASS_STATEMENT");
 
     // fields
     IElementType SE_ENUM_FIELD = new CCompositeElementType("SE_ENUM_FIELD");
