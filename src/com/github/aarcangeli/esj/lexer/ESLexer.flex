@@ -36,9 +36,9 @@ COMMENT_TAIL = ([^"*"]*("*"+[^"*""/"])?)*("*"+"/")?
 END_OF_LINE_COMMENT = "//" [^\r\n]*
 
 // NB: escape characters are intentionally ignored since the reference compiler does not support it
-STRING_LITERAL = \"[^\n\"]*\"
+STRING_LITERAL = \"[^\n\"]*(\")?
 // NB: same as above
-CHARACTER_LITERAL = \'[^\n']*\'
+CHARACTER_LITERAL = \'[^\n']*(\')?
 
 %state COMMENT
 %state CPPBLOCK
