@@ -22,6 +22,10 @@
         <!-- The syntax highlighter is the first type of integration -->
         <!-- It link every type of token with his color -->
         <lang.syntaxHighlighterFactory language="SE1-ES" implementationClass="com.github.aarcangeli.esj.CHighlighter$Factory"/>
+
+        <!-- A parser definition is the most important class in a language plugin -->
+        <!-- It converts a file into a structured psi tree -->
+        <lang.parserDefinition language="SE1-ES" implementationClass="com.github.aarcangeli.esj.psi.CParserDefinition"/>
     </extensions>
 
     <actions>
