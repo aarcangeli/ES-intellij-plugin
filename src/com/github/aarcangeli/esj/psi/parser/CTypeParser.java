@@ -4,7 +4,6 @@ import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.TokenSet;
 
-import static com.github.aarcangeli.esj.lexer.CTokens.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CTypeParser implements CElementTypes {

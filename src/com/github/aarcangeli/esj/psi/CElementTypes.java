@@ -1,10 +1,11 @@
 package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.CLanguage;
+import com.github.aarcangeli.esj.lexer.CTokens;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 
-public interface CElementTypes {
+public interface CElementTypes extends CTokens {
     IFileElementType SE_FILE = new IFileElementType("SE_FILE", CLanguage.INSTANCE);
 
     // commons
@@ -24,4 +25,12 @@ public interface CElementTypes {
     // fields
     IElementType SE_ENUM_FIELD = new CCompositeElementType("SE_ENUM_FIELD");
     IElementType SE_EVENT_FIELD = new CCompositeElementType("SE_EVENT_FIELD");
+
+    // class properties
+    IElementType SE_CLASS_ATTRIBUTE = new CCompositeElementType("SE_CLASS_ATTRIBUTE");
+
+    IElementType SE_PROPERTIES_BLOCK = new CCompositeElementType("SE_PROPERTIES_BLOCK");
+    IElementType SE_COMPONENTS_BLOCK = new CCompositeElementType("SE_COMPONENTS_BLOCK");
+    IElementType SE_FUNCTIONS_BLOCK = new CCompositeElementType("SE_FUNCTIONS_BLOCK");
+    IElementType SE_PROCEDURES_BLOCK = new CCompositeElementType("SE_PROCEDURES_BLOCK");
 }

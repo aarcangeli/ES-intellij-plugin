@@ -8,7 +8,6 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
-import static com.github.aarcangeli.esj.lexer.CTokens.*;
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.*;
 import static com.intellij.lang.PsiBuilder.Marker;
 import static com.intellij.lang.PsiBuilderUtil.expect;
