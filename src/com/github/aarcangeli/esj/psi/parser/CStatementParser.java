@@ -1,16 +1,11 @@
 package com.github.aarcangeli.esj.psi.parser;
 
-import com.github.aarcangeli.esj.lexer.CTokens;
 import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.github.aarcangeli.esj.psi.parser.CExpressionParser.ExpressionContext;
 import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.IElementType;
-import org.jetbrains.annotations.NotNull;
 
-import static com.github.aarcangeli.esj.lexer.CTokens.*;
 import static com.intellij.lang.PsiBuilder.Marker;
-import static com.intellij.lang.PsiBuilderUtil.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CStatementParser implements CElementTypes {
@@ -62,6 +57,11 @@ public class CStatementParser implements CElementTypes {
         if (tokenType == K_DO) return parseDoWhileStatement(builder);
         if (tokenType == K_FOR) return parseForStatement(builder);
         if (tokenType == K_RETURN) return parseReturnStatement(builder);
+        if (tokenType == K_WAIT) return parseWaitStatement(builder);
+        if (tokenType == K_AUTOWAIT) return parseAutoWaitStatement(builder);
+        if (tokenType == K_WAITEVENT) return parseWaitEventStatement(builder);
+        if (tokenType == K_ON) return parseOnStatement(builder, SE_ON_STATEMENT);
+        if (tokenType == K_OTHERWISE) return parseOnStatement(builder, SE_OTHERWISE_STATEMENT);
         if (tokenType == SEMICOLON) return parseEmptyStatement(builder);
         Marker expression = CExpressionParser.parseExpression(builder, ExpressionContext.STATEMENT);
         if (expression != null) {
@@ -192,6 +192,83 @@ public class CStatementParser implements CElementTypes {
         parseRequiredCodeBlock(builder);
 
         statement.done(SE_FOR_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseWaitStatement(PsiBuilder builder) {
+        assert builder.getTokenType() == K_WAIT;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        if (!CParserUtils.parseExpressionInParenth(builder, true)) {
+            statement.done(SE_WAIT_STATEMENT);
+            return statement;
+        }
+
+        parseRequiredCodeBlock(builder);
+
+        statement.done(SE_WAIT_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseAutoWaitStatement(PsiBuilder builder) {
+        assert builder.getTokenType() == K_AUTOWAIT;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        if (!CParserUtils.parseExpressionInParenth(builder, true)) {
+            statement.done(SE_AUTOWAIT_STATEMENT);
+            return statement;
+        }
+
+        if (!expect(builder, SEMICOLON)) {
+            builder.error("';' expected");
+        }
+
+        statement.done(SE_AUTOWAIT_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseWaitEventStatement(PsiBuilder builder) {
+        assert builder.getTokenType() == K_WAITEVENT;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        if (!CParserUtils.parseExpressionInParenth(builder, true)) {
+            statement.done(SE_WAITEVENT_STATEMENT);
+            return statement;
+        }
+
+        if (!expect(builder, IDENTIFIER)) {
+            builder.error("Identifier expected");
+        }
+
+        expect(builder, IDENTIFIER);
+
+        if (!expect(builder, SEMICOLON)) {
+            builder.error("';' expected");
+        }
+
+        statement.done(SE_WAITEVENT_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseOnStatement(PsiBuilder builder, IElementType elementType) {
+        assert builder.getTokenType() == K_ON || builder.getTokenType() == K_OTHERWISE;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        CParserUtils.parseEventSpecification(builder);
+
+        if (!expect(builder, COLON)) {
+            builder.error("':' expected");
+        }
+
+        parseRequiredCodeBlock(builder);
+
+        expect(builder, SEMICOLON);
+
+        statement.done(elementType);
         return statement;
     }
 

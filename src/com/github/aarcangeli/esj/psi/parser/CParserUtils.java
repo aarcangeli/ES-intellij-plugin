@@ -73,17 +73,39 @@ public class CParserUtils {
         }
     }
 
+    static void parseEventSpecification(PsiBuilder builder) {
+        if (!expect(builder, LPARENTH)) {
+            builder.error("'(' expected");
+        } else {
+            while (builder.getTokenType() == IDENTIFIER) {
+                builder.advanceLexer();
+            }
+            if (!expect(builder, RPARENTH)) {
+                builder.error("')' expected");
+            }
+        }
+    }
+
     static boolean parseExpressionInParenth(PsiBuilder builder) {
+        return parseExpressionInParenth(builder, false);
+    }
+
+    static boolean parseExpressionInParenth(PsiBuilder builder, boolean optional) {
         if (!expect(builder, LPARENTH)) {
             builder.error("'(' expected");
         }
 
         PsiBuilder.Marker beforeExpr = builder.mark();
-        CExpressionParser.parseExpression(builder, ExpressionContext.STANDARD);
-        if (builder.getTokenType() == SEMICOLON) {
-            beforeExpr.rollbackTo();
-            builder.error("expression expected");
-            return false;
+        if (CExpressionParser.parseExpression(builder, ExpressionContext.STANDARD) == null) {
+            if (!optional) {
+                builder.error("expression expected");
+            }
+        } else {
+            if (builder.getTokenType() == SEMICOLON || builder.getTokenType() == LBRACE) {
+                beforeExpr.rollbackTo();
+                builder.error("expression expected");
+                return false;
+            }
         }
 
         beforeExpr.drop();

@@ -36,16 +36,7 @@ public class CProcedureParser implements CElementTypes {
         PsiBuilder.Marker procedure = builder.mark();
         builder.advanceLexer();
 
-        if (!expect(builder, LPARENTH)) {
-            builder.error("'(' expected");
-        } else {
-            while (builder.getTokenType() == IDENTIFIER) {
-                builder.advanceLexer();
-            }
-            if (!expect(builder, RPARENTH)) {
-                builder.error("')' expected");
-            }
-        }
+        CParserUtils.parseEventSpecification(builder);
 
         if (builder.getTokenType() == COLON) {
             PsiBuilder.Marker override = builder.mark();
