@@ -10,14 +10,8 @@ import static com.intellij.lang.PsiBuilderUtil.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CProcedureParser implements CElementTypes {
-
     private static final TokenSet PROCEDURE_START = TokenSet.create(IDENTIFIER);
-
-    private static final TokenSet PARAMETER_START = TokenSet.orSet(CTypeParser.TYPE_START, TokenSet.create(IDENTIFIER));
-    private static final TokenSet PARAMETER_STOPPERS = TokenSet.create(RPARENTH, LBRACE);
-
     private static final TokenSet NOT_GARBAGE = TokenSet.orSet(PROCEDURE_START, CClassParser.CLASS_LABELS);
-
 
     public static void parseProceduresBlock(PsiBuilder builder) {
         assert builder.getTokenType() == K_PROCEDURES;
