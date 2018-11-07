@@ -56,6 +56,7 @@ public interface CElementTypes extends CTokens {
 
     IElementType SE_BLOCK_STATEMENT = new CCompositeElementType("SE_BLOCK_STATEMENT");
     IElementType SE_IF_STATEMENT = new CCompositeElementType("SE_IF_STATEMENT");
+    IElementType SE_TRY_STATEMENT = new CCompositeElementType("SE_IF_STATEMENT");
     IElementType SE_SWITCH_STATEMENT = new CCompositeElementType("SE_IF_STATEMENT");
     IElementType SE_CASE_STATEMENT = new CCompositeElementType("SE_CASE_STATEMENT");
     IElementType SE_DEFAULT_STATEMENT = new CCompositeElementType("SE_DEFAULT_STATEMENT");

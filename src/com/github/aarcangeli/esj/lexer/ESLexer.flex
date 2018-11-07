@@ -83,6 +83,8 @@ CHARACTER_LITERAL = \'[^\n']*(\')?
     "autowait"  { return CTokens.K_AUTOWAIT; }
     "autocall"  { return CTokens.K_AUTOCALL; }
     "waitevent" { return CTokens.K_WAITEVENT; }
+    "try"       { return CTokens.K_TRY; }
+    "catch"     { return CTokens.K_CATCH; }
 
     // aditional keywords
     "event"     { return CTokens.K_EVENT; }

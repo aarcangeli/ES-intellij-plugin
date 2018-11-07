@@ -42,8 +42,15 @@ public class CStatementParser implements CElementTypes {
             }
 
             Marker error = builder.mark();
+            IElementType tokenType = builder.getTokenType();
             builder.advanceLexer();
-            error.error("unexpected token");
+            if (tokenType == K_ELSE) {
+                error.error("'else' without 'if'");
+            } else if (tokenType == K_CATCH) {
+                error.error("'catch' without 'try'");
+            } else {
+                error.error("unexpected token");
+            }
         }
     }
 
@@ -51,11 +58,11 @@ public class CStatementParser implements CElementTypes {
         IElementType tokenType = builder.getTokenType();
         if (tokenType == LBRACE) return parseBlockStatement(builder);
         if (tokenType == K_IF) return parseIfStatement(builder);
-        if (tokenType == K_SWITCH) return parseSwitchStatement(builder);
+        if (tokenType == K_SWITCH) return parseParenthStatement(builder, SE_SWITCH_STATEMENT);
         if (tokenType == K_CASE) return parseCaseStatement(builder);
         if (tokenType == K_DEFAULT) return parseDefaultStatement(builder);
         if (tokenType == K_BREAK) return parseSingleTokenStatement(builder, SE_BREAK_STATEMENT);
-        if (tokenType == K_WHILE) return parseWhileStatement(builder);
+        if (tokenType == K_WHILE) return parseParenthStatement(builder, SE_WHILE_STATEMENT);
         if (tokenType == K_DO) return parseDoWhileStatement(builder);
         if (tokenType == K_FOR) return parseForStatement(builder);
         if (tokenType == K_RETURN) return parseReturnStatement(builder);
@@ -70,6 +77,7 @@ public class CStatementParser implements CElementTypes {
         if (tokenType == K_STOP) return parseSingleTokenStatement(builder, SE_STOP_STATEMENT);
         if (tokenType == K_RESUME) return parseSingleTokenStatement(builder, SE_RESUME_STATEMENT);
         if (tokenType == K_PASS) return parseSingleTokenStatement(builder, SE_PASS_STATEMENT);
+        if (tokenType == K_TRY) return parseTryStatement(builder);
         if (tokenType == SEMICOLON) return parseEmptyStatement(builder);
         Marker expression = CExpressionParser.parseExpression(builder, ExpressionContext.STATEMENT);
         if (expression != null) {
@@ -112,22 +120,6 @@ public class CStatementParser implements CElementTypes {
         return statement;
     }
 
-    private static Marker parseSwitchStatement(PsiBuilder builder) {
-        assert builder.getTokenType() == K_SWITCH;
-        Marker statement = builder.mark();
-        builder.advanceLexer();
-
-        if (!CParserUtils.parseExpressionInParenth(builder)) {
-            statement.done(SE_SWITCH_STATEMENT);
-            return statement;
-        }
-
-        parseRequiredCodeBlock(builder);
-
-        statement.done(SE_SWITCH_STATEMENT);
-        return statement;
-    }
-
     private static Marker parseCaseStatement(PsiBuilder builder) {
         assert builder.getTokenType() == K_CASE;
         Marker statement = builder.mark();
@@ -155,22 +147,6 @@ public class CStatementParser implements CElementTypes {
         }
 
         statement.done(SE_DEFAULT_STATEMENT);
-        return statement;
-    }
-
-    private static Marker parseWhileStatement(PsiBuilder builder) {
-        assert builder.getTokenType() == K_WHILE;
-        Marker statement = builder.mark();
-        builder.advanceLexer();
-
-        if (!CParserUtils.parseExpressionInParenth(builder)) {
-            statement.done(SE_WHILE_STATEMENT);
-            return statement;
-        }
-
-        parseRequiredCodeBlock(builder);
-
-        statement.done(SE_WHILE_STATEMENT);
         return statement;
     }
 
@@ -348,6 +324,44 @@ public class CStatementParser implements CElementTypes {
             builder.error("';' expected");
         }
         statement.done(elementType);
+        return statement;
+    }
+
+    private static Marker parseTryStatement(PsiBuilder builder) {
+        assert builder.getTokenType() == K_TRY;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        parseRequiredCodeBlock(builder);
+
+        while (builder.getTokenType() == K_CATCH) {
+            builder.advanceLexer();
+
+            if (!CParserUtils.parseExpressionInParenth(builder)) {
+                statement.done(SE_TRY_STATEMENT);
+                return statement;
+            }
+
+            parseRequiredCodeBlock(builder);
+        }
+
+        statement.done(SE_TRY_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseParenthStatement(PsiBuilder builder, IElementType tokenType) {
+        assert builder.getTokenType() == K_SWITCH || builder.getTokenType() == K_WHILE;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        if (!CParserUtils.parseExpressionInParenth(builder)) {
+            statement.done(tokenType);
+            return statement;
+        }
+
+        parseRequiredCodeBlock(builder);
+
+        statement.done(tokenType);
         return statement;
     }
 

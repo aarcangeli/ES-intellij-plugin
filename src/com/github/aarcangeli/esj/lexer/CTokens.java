@@ -39,6 +39,8 @@ public interface CTokens {
     IElementType K_AUTOWAIT = new IElementType("ES.K_AUTOWAIT", CLanguage.INSTANCE);
     IElementType K_AUTOCALL = new IElementType("ES.K_AUTOCALL", CLanguage.INSTANCE);
     IElementType K_WAITEVENT = new IElementType("ES.K_WAITEVENT", CLanguage.INSTANCE);
+    IElementType K_TRY = new IElementType("ES.K_TRY", CLanguage.INSTANCE);
+    IElementType K_CATCH = new IElementType("ES.K_CATCH", CLanguage.INSTANCE);
 
     // aditional keywords
     IElementType K_EVENT = new IElementType("ES.K_EVENT", CLanguage.INSTANCE);
