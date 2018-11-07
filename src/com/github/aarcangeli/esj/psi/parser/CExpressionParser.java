@@ -9,7 +9,7 @@ import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CExpressionParser implements CElementTypes {
     private static final TokenSet ALL_EXPRESSIONS_TOKEN = TokenSet.create(C_INT, C_CHAR, C_STRING, IDENTIFIER,
-            LBRACE, RBRACE, EQ, PLUS, MINUS, LT, GT, EXCL, OR, AND, ASTERISK, DIV, PERC, XOR, LBRACKET, RBRACKET, COLON,
+            LBRACE, RBRACE, EQ, PLUS, MINUS, LT, GT, EXCL, OR, AND, ASTERISK, DIV, PERC, XOR, LBRACKET, RBRACKET,
             DOT, QUEST, TILDE);
     private static final TokenSet ALL_EXPRESSIONS = TokenSet.orSet(CTypeParser.TYPE_START, ALL_EXPRESSIONS_TOKEN);
 
@@ -25,7 +25,9 @@ public class CExpressionParser implements CElementTypes {
     }
 
     public static PsiBuilder.Marker parseExpression(PsiBuilder builder, ExpressionContext context) {
-        boolean blockAtComma = context == ExpressionContext.STANDARD || context == ExpressionContext.STATEMENT;
+        boolean allowComma = context == ExpressionContext.STANDARD || context == ExpressionContext.STATEMENT;
+        boolean allowColon = context != ExpressionContext.CASE;
+
         // todo: develop this
         int braceCount = 0;
         PsiBuilder.Marker mark = null;
@@ -45,7 +47,12 @@ public class CExpressionParser implements CElementTypes {
                 }
                 continue;
             }
-            if (blockAtComma && type == COMMA) {
+            if (allowComma && type == COMMA) {
+                if (mark == null) mark = builder.mark();
+                builder.advanceLexer();
+                continue;
+            }
+            if (allowColon && type == COLON) {
                 if (mark == null) mark = builder.mark();
                 builder.advanceLexer();
                 continue;

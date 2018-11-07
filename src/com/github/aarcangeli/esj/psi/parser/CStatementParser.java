@@ -167,6 +167,10 @@ public class CStatementParser implements CElementTypes {
             return statement;
         }
 
+        if (!expect(builder, K_WHILE)) {
+            builder.error("'while' expected");
+        }
+
         CParserUtils.parseExpressionInParenth(builder);
 
         statement.done(SE_DO_WHILE_STATEMENT);
