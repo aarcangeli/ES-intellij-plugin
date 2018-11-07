@@ -40,8 +40,8 @@ public class CExpressionParser implements CElementTypes {
                 parseExpression(builder, ExpressionContext.STANDARD);
                 if (!expect(builder, RPARENTH)) {
                     builder.error("')' expected");
-                    continue;
                 }
+                continue;
             }
             if (type == COMMA && context == ExpressionContext.STANDARD) {
                 builder.advanceLexer();
