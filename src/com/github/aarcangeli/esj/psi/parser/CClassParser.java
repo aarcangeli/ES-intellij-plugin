@@ -2,6 +2,7 @@ package com.github.aarcangeli.esj.psi.parser;
 
 import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.PsiBuilder;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.eatGarbage;
@@ -14,7 +15,7 @@ public class CClassParser implements CElementTypes {
     private static final TokenSet CLASS_ATTRIBUTES_VALUES = TokenSet.create(C_STRING, C_INT, C_CHAR);
     public static final TokenSet CLASS_LABELS = TokenSet.create(K_PROPERTIES, K_COMPONENTS, K_FUNCTIONS, K_PROCEDURES);
 
-    private static final TokenSet START_POINTS = TokenSet.orSet(CLASS_ATTRIBUTES, TokenSet.create(K_PROPERTIES, K_COMPONENTS));
+    private static final TokenSet START_POINTS = TokenSet.orSet(CLASS_ATTRIBUTES, TokenSet.create(K_PROPERTIES, K_COMPONENTS, K_FUNCTIONS));
 
     static void parseClass(PsiBuilder builder) {
         assert builder.getTokenType() == K_CLASS;
@@ -48,12 +49,15 @@ public class CClassParser implements CElementTypes {
     private static void parseClassBody(PsiBuilder builder) {
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
             if (eatGarbage(builder, START_POINTS, "statement expected")) continue;
-            if (CLASS_ATTRIBUTES.contains(builder.getTokenType())) {
+            IElementType type = builder.getTokenType();
+            if (CLASS_ATTRIBUTES.contains(type)) {
                 parseAttribute(builder);
-            } else if (builder.getTokenType() == K_PROPERTIES) {
+            } else if (type == K_PROPERTIES) {
                 CPropertyParser.parseProperties(builder);
-            } else if (builder.getTokenType() == K_COMPONENTS) {
+            } else if (type == K_COMPONENTS) {
                 CComponentParser.parseComponentBlock(builder);
+            } else if (type == K_FUNCTIONS) {
+                CFunctionParser.parseFunctionBlock(builder);
             } else {
                 assert false;
             }

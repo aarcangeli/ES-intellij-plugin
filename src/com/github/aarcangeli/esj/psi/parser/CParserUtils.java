@@ -1,5 +1,6 @@
 package com.github.aarcangeli.esj.psi.parser;
 
+import com.github.aarcangeli.esj.psi.parser.CExpressionParser.ExpressionContext;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
@@ -70,5 +71,26 @@ public class CParserUtils {
             }
             err.error(message);
         }
+    }
+
+    static boolean parseExpressionInParenth(PsiBuilder builder) {
+        if (!expect(builder, LPARENTH)) {
+            builder.error("'(' expected");
+        }
+
+        PsiBuilder.Marker beforeExpr = builder.mark();
+        CExpressionParser.parseExpression(builder, ExpressionContext.STANDARD);
+        if (builder.getTokenType() == SEMICOLON) {
+            beforeExpr.rollbackTo();
+            builder.error("expression expected");
+            return false;
+        }
+
+        beforeExpr.drop();
+        if (!expect(builder, RPARENTH)) {
+            builder.error("')' expected");
+        }
+
+        return true;
     }
 }
