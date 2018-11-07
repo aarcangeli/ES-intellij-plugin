@@ -66,6 +66,8 @@ CHARACTER_LITERAL = \'[^\n']*(\')?
     "while"     { return CTokens.K_WHILE; }
     "switch"    { return CTokens.K_SWITCH; }
     "case"      { return CTokens.K_CASE; }
+    "default"   { return CTokens.K_DEFAULT; }
+    "break"     { return CTokens.K_BREAK; }
     "for"       { return CTokens.K_FOR; }
     "if"        { return CTokens.K_IF; }
     "else"      { return CTokens.K_ELSE; }

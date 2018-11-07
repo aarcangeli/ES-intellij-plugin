@@ -53,6 +53,8 @@ public class CStatementParser implements CElementTypes {
         if (tokenType == K_IF) return parseIfStatement(builder);
         if (tokenType == K_SWITCH) return parseSwitchStatement(builder);
         if (tokenType == K_CASE) return parseCaseStatement(builder);
+        if (tokenType == K_DEFAULT) return parseDefaultStatement(builder);
+        if (tokenType == K_BREAK) return parseSingleTokenStatement(builder, SE_BREAK_STATEMENT);
         if (tokenType == K_WHILE) return parseWhileStatement(builder);
         if (tokenType == K_DO) return parseDoWhileStatement(builder);
         if (tokenType == K_FOR) return parseForStatement(builder);
@@ -131,13 +133,28 @@ public class CStatementParser implements CElementTypes {
         Marker statement = builder.mark();
         builder.advanceLexer();
 
-        CExpressionParser.parseExpression(builder, ExpressionContext.CASE);
+        if (CExpressionParser.parseExpression(builder, ExpressionContext.CASE) == null) {
+            builder.error("Expression expected");
+        }
 
         if (!expect(builder, COLON)) {
             builder.error("':' expected");
         }
 
         statement.done(SE_CASE_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseDefaultStatement(PsiBuilder builder) {
+        assert builder.getTokenType() == K_DEFAULT;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        if (!expect(builder, COLON)) {
+            builder.error("':' expected");
+        }
+
+        statement.done(SE_DEFAULT_STATEMENT);
         return statement;
     }
 

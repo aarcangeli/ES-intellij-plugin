@@ -9,7 +9,7 @@ import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CExpressionParser implements CElementTypes {
     private static final TokenSet ALL_EXPRESSIONS_TOKEN = TokenSet.create(C_INT, C_CHAR, C_STRING, IDENTIFIER,
-            LBRACE, RBRACE, EQ, PLUS, MINUS, LT, GT, EXCL, OR, AND, ASTERISK, DIV, PERC, XOR, LBRACKET, RBRACKET,
+            EQ, PLUS, MINUS, LT, GT, EXCL, OR, AND, ASTERISK, DIV, PERC, XOR, LBRACKET, RBRACKET,
             DOT, QUEST, TILDE);
     private static final TokenSet ALL_EXPRESSIONS = TokenSet.orSet(CTypeParser.TYPE_START, ALL_EXPRESSIONS_TOKEN);
 
@@ -29,15 +29,9 @@ public class CExpressionParser implements CElementTypes {
         boolean allowColon = context != ExpressionContext.CASE;
 
         // todo: develop this
-        int braceCount = 0;
         PsiBuilder.Marker mark = null;
         while (!builder.eof()) {
             IElementType type = builder.getTokenType();
-            if (type == LBRACE) braceCount++;
-            if (type == RBRACE) {
-                if (braceCount == 0) break;
-                braceCount--;
-            }
             if (type == LPARENTH) {
                 if (mark == null) mark = builder.mark();
                 builder.advanceLexer();
@@ -57,7 +51,7 @@ public class CExpressionParser implements CElementTypes {
                 builder.advanceLexer();
                 continue;
             }
-            if (braceCount == 0 && !ALL_EXPRESSIONS.contains(type)) break;
+            if (!ALL_EXPRESSIONS.contains(type)) break;
             if (mark == null) mark = builder.mark();
             builder.advanceLexer();
         }

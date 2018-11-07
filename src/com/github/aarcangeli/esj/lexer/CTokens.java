@@ -26,6 +26,8 @@ public interface CTokens {
     IElementType K_ENUM = new IElementType("ES.K_ENUM", CLanguage.INSTANCE);
     IElementType K_SWITCH = new IElementType("ES.K_SWITCH", CLanguage.INSTANCE);
     IElementType K_CASE = new IElementType("ES.K_CASE", CLanguage.INSTANCE);
+    IElementType K_DEFAULT = new IElementType("ES.K_DEFAULT", CLanguage.INSTANCE);
+    IElementType K_BREAK = new IElementType("ES.K_BREAK", CLanguage.INSTANCE);
     IElementType K_CLASS = new IElementType("ES.K_CLASS", CLanguage.INSTANCE);
     IElementType K_DO = new IElementType("ES.K_DO", CLanguage.INSTANCE);
     IElementType K_VOID = new IElementType("ES.K_VOID", CLanguage.INSTANCE);
