@@ -14,7 +14,7 @@ public class CClassParser implements CElementTypes {
     private static final TokenSet CLASS_ATTRIBUTES_VALUES = TokenSet.create(C_STRING, C_INT, C_CHAR);
     public static final TokenSet CLASS_LABELS = TokenSet.create(K_PROPERTIES, K_COMPONENTS, K_FUNCTIONS, K_PROCEDURES);
 
-    private static final TokenSet START_POINTS = TokenSet.orSet(CLASS_ATTRIBUTES, TokenSet.create(K_PROPERTIES));
+    private static final TokenSet START_POINTS = TokenSet.orSet(CLASS_ATTRIBUTES, TokenSet.create(K_PROPERTIES, K_COMPONENTS));
 
     static void parseClass(PsiBuilder builder) {
         assert builder.getTokenType() == K_CLASS;
@@ -52,6 +52,8 @@ public class CClassParser implements CElementTypes {
                 parseAttribute(builder);
             } else if (builder.getTokenType() == K_PROPERTIES) {
                 CPropertyParser.parseProperties(builder);
+            } else if (builder.getTokenType() == K_COMPONENTS) {
+                CComponentParser.parseComponentBlock(builder);
             } else {
                 assert false;
             }
