@@ -26,11 +26,17 @@ public interface CElementTypes extends CTokens {
     IElementType SE_ENUM_FIELD = new CCompositeElementType("SE_ENUM_FIELD");
     IElementType SE_EVENT_FIELD = new CCompositeElementType("SE_EVENT_FIELD");
 
-    // class properties
+    // class
     IElementType SE_CLASS_ATTRIBUTE = new CCompositeElementType("SE_CLASS_ATTRIBUTE");
 
     IElementType SE_PROPERTIES_BLOCK = new CCompositeElementType("SE_PROPERTIES_BLOCK");
     IElementType SE_COMPONENTS_BLOCK = new CCompositeElementType("SE_COMPONENTS_BLOCK");
     IElementType SE_FUNCTIONS_BLOCK = new CCompositeElementType("SE_FUNCTIONS_BLOCK");
     IElementType SE_PROCEDURES_BLOCK = new CCompositeElementType("SE_PROCEDURES_BLOCK");
+
+    IElementType SE_PROPERTY_FIELD = new CCompositeElementType("SE_PROPERTY_FIELD");
+    IElementType SE_PROPERTY_WED = new CCompositeElementType("SE_PROPERTY_FIELD");
+    IElementType SE_PROPERTY_SHORTCUT = new CCompositeElementType("SE_PROPERTY_SHORTCUT");
+    IElementType SE_PROPERTY_COLOR = new CCompositeElementType("SE_PROPERTY_COLOR");
+    IElementType SE_PROPERTY_DEFAULT_VALUE = new CCompositeElementType("SE_PROPERTY_DEFAULT_VALUE");
 }

@@ -6,18 +6,19 @@ import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.eatGarbage;
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.reportExtraComma;
+import static com.intellij.lang.PsiBuilder.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CClassParser implements CElementTypes {
     private static final TokenSet CLASS_ATTRIBUTES = TokenSet.create(K_NAME, K_THUMBNAIL, K_FEATURES);
     private static final TokenSet CLASS_ATTRIBUTES_VALUES = TokenSet.create(C_STRING, C_INT, C_CHAR);
-    private static final TokenSet CLASS_LABELS = TokenSet.create(K_PROPERTIES, K_COMPONENTS, K_FUNCTIONS, K_PROCEDURES);
+    public static final TokenSet CLASS_LABELS = TokenSet.create(K_PROPERTIES, K_COMPONENTS, K_FUNCTIONS, K_PROCEDURES);
 
-    private static final TokenSet START_POINTS = TokenSet.orSet(CLASS_ATTRIBUTES, TokenSet.create());
+    private static final TokenSet START_POINTS = TokenSet.orSet(CLASS_ATTRIBUTES, TokenSet.create(K_PROPERTIES));
 
     static void parseClass(PsiBuilder builder) {
         assert builder.getTokenType() == K_CLASS;
-        PsiBuilder.Marker statement = builder.mark();
+        Marker statement = builder.mark();
         builder.advanceLexer();
         expect(builder, K_EXPORT);
 
@@ -49,15 +50,17 @@ public class CClassParser implements CElementTypes {
             if (eatGarbage(builder, START_POINTS, "statement expected")) continue;
             if (CLASS_ATTRIBUTES.contains(builder.getTokenType())) {
                 parseAttribute(builder);
+            } else if (builder.getTokenType() == K_PROPERTIES) {
+                CPropertyParser.parseProperties(builder);
             } else {
-                break;
+                assert false;
             }
         }
     }
 
     private static void parseAttribute(PsiBuilder builder) {
         assert CLASS_ATTRIBUTES.contains(builder.getTokenType());
-        PsiBuilder.Marker mark = builder.mark();
+        Marker mark = builder.mark();
         builder.advanceLexer();
 
         while (!builder.eof()) {

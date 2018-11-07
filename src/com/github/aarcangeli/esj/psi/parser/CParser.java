@@ -46,7 +46,7 @@ public class CParser implements PsiParser, CElementTypes {
         }
 
         while (!builder.eof()) {
-            eatGarbage(builder, SET_STATEMENT_START, "'enum', 'event' or 'enum' expected");
+            eatGarbage(builder, SET_STATEMENT_START, "'enum', 'event' or 'enum' expected", false);
             IElementType type = builder.getTokenType();
 
             if (type == CPP_BLOCK_BEGIN) {

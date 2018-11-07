@@ -10,6 +10,10 @@ import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CParserUtils {
     static boolean eatGarbage(PsiBuilder builder, TokenSet notGarbage, String message) {
+        return eatGarbage(builder, notGarbage, message, true);
+    }
+
+    static boolean eatGarbage(PsiBuilder builder, TokenSet notGarbage, String message, boolean closeWithBrace) {
         int braceCount = 0;
         IElementType type = builder.getTokenType();
         if (!builder.eof() && !notGarbage.contains(type)) {
@@ -17,7 +21,7 @@ public class CParserUtils {
             while (!builder.eof() && (braceCount != 0 || !notGarbage.contains(type))) {
                 if (type == LBRACE) braceCount++;
                 if (type == RBRACE) {
-                    if (braceCount == 0) break;
+                    if (closeWithBrace && braceCount == 0) break;
                     braceCount--;
                 }
                 builder.advanceLexer();
