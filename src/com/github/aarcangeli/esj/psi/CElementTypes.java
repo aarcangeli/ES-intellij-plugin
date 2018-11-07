@@ -39,4 +39,6 @@ public interface CElementTypes extends CTokens {
     IElementType SE_PROPERTY_SHORTCUT = new CCompositeElementType("SE_PROPERTY_SHORTCUT");
     IElementType SE_PROPERTY_COLOR = new CCompositeElementType("SE_PROPERTY_COLOR");
     IElementType SE_PROPERTY_DEFAULT_VALUE = new CCompositeElementType("SE_PROPERTY_DEFAULT_VALUE");
+    IElementType SE_INTERNAL_PROPERTY_BLOCK = new CCompositeElementType("SE_INTERNAL_PROPERTY_BLOCK");
+    IElementType SE_INTERNAL_PROPERTY = new CCompositeElementType("SE_INTERNAL_PROPERTY");
 }

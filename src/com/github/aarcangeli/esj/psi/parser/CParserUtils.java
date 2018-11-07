@@ -62,10 +62,10 @@ public class CParserUtils {
         start.done(SE_CPP_BLOCK);
     }
 
-    static void reportExtraComma(PsiBuilder builder, String message) {
-        if (builder.getTokenType() == COMMA) {
+    static void reportExtraElement(PsiBuilder builder, IElementType element, String message) {
+        if (builder.getTokenType() == element) {
             PsiBuilder.Marker err = builder.mark();
-            while (builder.getTokenType() == COMMA) {
+            while (builder.getTokenType() == element) {
                 builder.advanceLexer();
             }
             err.error(message);

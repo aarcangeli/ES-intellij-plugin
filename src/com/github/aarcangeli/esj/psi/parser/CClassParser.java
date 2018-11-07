@@ -5,7 +5,7 @@ import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.eatGarbage;
-import static com.github.aarcangeli.esj.psi.parser.CParserUtils.reportExtraComma;
+import static com.github.aarcangeli.esj.psi.parser.CParserUtils.reportExtraElement;
 import static com.intellij.lang.PsiBuilder.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
@@ -73,7 +73,7 @@ public class CClassParser implements CElementTypes {
                 builder.error("';' or ',' expected");
                 break;
             }
-            reportExtraComma(builder, "repeated ','");
+            reportExtraElement(builder, COMMA, "repeated ','");
         }
         if (!expect(builder, SEMICOLON)) {
             builder.error("';' expected");
