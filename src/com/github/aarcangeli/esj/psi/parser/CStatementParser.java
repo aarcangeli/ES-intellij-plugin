@@ -14,7 +14,6 @@ public class CStatementParser implements CElementTypes {
     static void parseRequiredCodeBlock(PsiBuilder builder) {
         if (builder.getTokenType() == LBRACE) {
             parseCodeBlock(builder);
-            expect(builder, SEMICOLON);
         } else {
             builder.error("'{' expected");
         }

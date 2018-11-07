@@ -17,7 +17,7 @@ public class CFunctionParser implements CElementTypes {
     private static final TokenSet PARAMETER_START = TokenSet.orSet(CTypeParser.TYPE_START, TokenSet.create(IDENTIFIER));
     private static final TokenSet PARAMETER_STOPPERS = TokenSet.create(RPARENTH, LBRACE);
 
-    private static final TokenSet NOT_GARBAGE = TokenSet.orSet(FUNCTION_START, CClassParser.CLASS_LABELS, TokenSet.create(COMMA));
+    private static final TokenSet NOT_GARBAGE = TokenSet.orSet(FUNCTION_START, CClassParser.CLASS_LABELS);
 
 
     public static void parseFunctionBlock(PsiBuilder builder) {
@@ -32,7 +32,6 @@ public class CFunctionParser implements CElementTypes {
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
             if (eatGarbage(builder, NOT_GARBAGE, "function expected")) continue;
             if (CClassParser.CLASS_LABELS.contains(builder.getTokenType())) break;
-            if (expect(builder, COMMA)) continue;
 
             parseFunction(builder);
         }
@@ -71,6 +70,7 @@ public class CFunctionParser implements CElementTypes {
         expect(builder, K_CONST);
 
         CStatementParser.parseRequiredCodeBlock(builder);
+        expect(builder, SEMICOLON);
 
         function.done(SE_FUNCTION);
     }
@@ -97,7 +97,7 @@ public class CFunctionParser implements CElementTypes {
             par.done(SE_PARAMETER);
 
             if (PARAMETER_STOPPERS.contains(builder.getTokenType())) break;
-            if (builder.getTokenType() == COMMA) continue;
+            if (expect(builder, COMMA)) continue;
 
             Marker err = builder.mark();
             while (!builder.eof() && !PARAMETER_STOPPERS.contains(builder.getTokenType()) && builder.getTokenType() != COMMA) {
@@ -108,5 +108,4 @@ public class CFunctionParser implements CElementTypes {
 
         parameters.done(SE_PARAMETER_LIST);
     }
-
 }

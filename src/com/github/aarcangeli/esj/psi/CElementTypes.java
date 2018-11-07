@@ -49,6 +49,9 @@ public interface CElementTypes extends CTokens {
     IElementType SE_PARAMETER_LIST = new CCompositeElementType("SE_PARAMETER_LIST");
     IElementType SE_PARAMETER = new CCompositeElementType("SE_PARAMETER");
 
+    IElementType SE_PROCEDURE = new CCompositeElementType("SE_PROCEDURE");
+    IElementType SE_PROCEDURE_OVERRIDE = new CCompositeElementType("SE_PROCEDURE_OVERRIDE");
+
     IElementType SE_CODE_BLOCK = new CCompositeElementType("SE_CODE_BLOCK");
 
     IElementType SE_BLOCK_STATEMENT = new CCompositeElementType("SE_BLOCK_STATEMENT");
