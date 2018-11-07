@@ -62,6 +62,12 @@ public class CStatementParser implements CElementTypes {
         if (tokenType == K_WAITEVENT) return parseWaitEventStatement(builder);
         if (tokenType == K_ON) return parseOnStatement(builder, SE_ON_STATEMENT);
         if (tokenType == K_OTHERWISE) return parseOnStatement(builder, SE_OTHERWISE_STATEMENT);
+        if (tokenType == K_JUMP) return parseJumpStatement(builder, SE_JUMP_STATEMENT);
+        if (tokenType == K_CALL) return parseJumpStatement(builder, SE_CALL_STATEMENT);
+        if (tokenType == K_AUTOCALL) return parseAutoCallStatement(builder);
+        if (tokenType == K_STOP) return parseSingleTokenStatement(builder, SE_STOP_STATEMENT);
+        if (tokenType == K_RESUME) return parseSingleTokenStatement(builder, SE_RESUME_STATEMENT);
+        if (tokenType == K_PASS) return parseSingleTokenStatement(builder, SE_PASS_STATEMENT);
         if (tokenType == SEMICOLON) return parseEmptyStatement(builder);
         Marker expression = CExpressionParser.parseExpression(builder, ExpressionContext.STATEMENT);
         if (expression != null) {
@@ -268,6 +274,58 @@ public class CStatementParser implements CElementTypes {
 
         expect(builder, SEMICOLON);
 
+        statement.done(elementType);
+        return statement;
+    }
+
+    private static Marker parseJumpStatement(PsiBuilder builder, IElementType elementType) {
+        assert builder.getTokenType() == K_JUMP || builder.getTokenType() == K_CALL;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        CParserUtils.parseJumpTarget(builder);
+
+        if (!CParserUtils.parseExpressionInParenth(builder, true)) {
+            statement.done(elementType);
+            return statement;
+        }
+        if (!expect(builder, SEMICOLON)) {
+            builder.error("';' expected");
+        }
+
+        statement.done(elementType);
+        return statement;
+    }
+
+    private static Marker parseAutoCallStatement(PsiBuilder builder) {
+        assert builder.getTokenType() == K_AUTOCALL;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        CParserUtils.parseJumpTarget(builder);
+
+        if (!CParserUtils.parseExpressionInParenth(builder, true)) {
+            statement.done(SE_AUTOCALL_STATEMENT);
+            return statement;
+        }
+        if (!expect(builder, IDENTIFIER)) {
+            builder.error("Identifier expected");
+        }
+        expect(builder, IDENTIFIER);
+        if (!expect(builder, SEMICOLON)) {
+            builder.error("';' expected");
+        }
+
+        statement.done(SE_AUTOCALL_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseSingleTokenStatement(PsiBuilder builder, IElementType elementType) {
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+        if (!expect(builder, SEMICOLON)) {
+            builder.error("';' expected");
+        }
         statement.done(elementType);
         return statement;
     }

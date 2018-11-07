@@ -115,4 +115,19 @@ public class CParserUtils {
 
         return true;
     }
+
+    static void parseJumpTarget(PsiBuilder builder) {
+        if (!expect(builder, IDENTIFIER)) {
+            builder.error("Identifier expected");
+        }
+
+        if (expect(builder, COLON)) {
+            if (!expect(builder, COLON)) {
+                builder.error("':' expected");
+            }
+            if (!expect(builder, IDENTIFIER)) {
+                builder.error("Identifier expected");
+            }
+        }
+    }
 }

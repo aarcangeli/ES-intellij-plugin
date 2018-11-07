@@ -68,6 +68,12 @@ public interface CElementTypes extends CTokens {
     IElementType SE_WAITEVENT_STATEMENT = new CCompositeElementType("SE_WAITEVENT_STATEMENT");
     IElementType SE_ON_STATEMENT = new CCompositeElementType("SE_ON_STATEMENT");
     IElementType SE_OTHERWISE_STATEMENT = new CCompositeElementType("SE_OTHERWISE_STATEMENT");
+    IElementType SE_JUMP_STATEMENT = new CCompositeElementType("SE_JUMP_STATEMENT");
+    IElementType SE_CALL_STATEMENT = new CCompositeElementType("SE_CALL_STATEMENT");
+    IElementType SE_AUTOCALL_STATEMENT = new CCompositeElementType("SE_AUTOCALL_STATEMENT");
+    IElementType SE_STOP_STATEMENT = new CCompositeElementType("SE_STOP_STATEMENT");
+    IElementType SE_RESUME_STATEMENT = new CCompositeElementType("SE_RESUME_STATEMENT");
+    IElementType SE_PASS_STATEMENT = new CCompositeElementType("SE_PASS_STATEMENT");
     IElementType SE_EMPTY_STATEMENT = new CCompositeElementType("SE_EMPTY_STATEMENT");
 
     IElementType SE_EXPRESSION = new CCompositeElementType("SE_EXPRESSION");
