@@ -4,6 +4,7 @@ import com.github.aarcangeli.esj.CLanguage;
 import com.github.aarcangeli.esj.lexer.CTokens;
 import com.github.aarcangeli.esj.psi.composite.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +15,12 @@ public interface CElementTypes extends CTokens {
         @Override
         @Nullable
         public ASTNode parseContents(@NotNull ASTNode chameleon) {
-            System.out.println("Parsing " + chameleon.getPsi().getContainingFile().getVirtualFile().getName());
+            VirtualFile virtualFile = chameleon.getPsi().getContainingFile().getVirtualFile();
+            if (virtualFile != null) {
+                System.out.println("Parsing " + virtualFile.getName());
+            } else {
+                System.out.println("Parsing unnamed file");
+            }
             return super.parseContents(chameleon);
         }
     };
@@ -101,4 +107,5 @@ public interface CElementTypes extends CTokens {
 
     // expressions
     IElementType SE_EXPRESSION = new CCompositeElementType("SE_EXPRESSION");
+    IElementType SE_REFERENCE_EXPRESSION = new CCompositeElementType("SE_REFERENCE_EXPRESSION", CGenericReferenceExpression.class);
 }

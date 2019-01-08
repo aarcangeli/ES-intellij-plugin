@@ -27,8 +27,11 @@
         <!-- It converts a file into a structured psi tree -->
         <lang.parserDefinition language="SE1-ES" implementationClass="com.github.aarcangeli.esj.psi.CParserDefinition"/>
 
-        <!-- This configuration enable find usages (alt+f7) -->
+        <!-- Enable find usages (alt+f7) -->
         <lang.findUsagesProvider language="SE1-ES" implementationClass="com.github.aarcangeli.esj.psi.CFindUsageProvider"/>
+
+        <!-- Implement Go To Class (Ctrl+N) for ES classes -->
+        <gotoClassContributor implementation="com.github.aarcangeli.esj.CGoToClassContributor"/>
 
     </extensions>
 

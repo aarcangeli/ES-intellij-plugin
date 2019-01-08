@@ -1,25 +1,30 @@
 package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.CFileType;
-import com.github.aarcangeli.esj.psi.composite.CEventStatement;
+import com.github.aarcangeli.esj.lexer.CTokens;
+import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
+import com.github.aarcangeli.esj.psi.composite.CClassStatement;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiReferenceBase;
+import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
+import static com.github.aarcangeli.esj.psi.CElementTypes.*;
+
 public class CGenericReference extends PsiReferenceBase<PsiElement> {
     private final String name;
     private PsiElement resolved;
+    private final TokenSet SET_TO_GO_INSIDE = TokenSet.create(SE_CLASS_STATEMENT, SE_PROPERTIES_BLOCK, SE_COMPONENTS_BLOCK,
+            SE_FUNCTIONS_BLOCK, SE_PROCEDURES_BLOCK, SE_EVENT_STATEMENT, SE_ENUM_STATEMENT);
 
     public CGenericReference(@NotNull PsiElement element, @NotNull TextRange textRangeInElement, String name) {
         super(element, true);
@@ -38,20 +43,28 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
             if (virtualFile.getFileType() == CFileType.INSTANCE) {
                 PsiFile file = PsiManager.getInstance(project).findFile(virtualFile);
                 if (file != null) {
-                    for (PsiElement child : file.getChildren()) {
-                        if (child.getNode().getElementType() == CElementTypes.SE_EVENT_STATEMENT) {
-                            CEventStatement statement = (CEventStatement) child;
-                            if (Objects.equals(statement.getName(), name)) {
-                                resolved = child;
-                                return false;
-                            }
-                        }
-                    }
+                    if (!findInside(file)) return false;
                 }
             }
             return true;
         });
         return resolved;
+    }
+
+    private boolean findInside(PsiElement element) {
+        for (PsiElement child : element.getChildren()) {
+            if (child instanceof CAbstractNamedIdentifier) {
+                CAbstractNamedIdentifier statement = (CAbstractNamedIdentifier) child;
+                if (Objects.equals(statement.getName(), name)) {
+                    resolved = child;
+                    return false;
+                }
+            }
+            if (SET_TO_GO_INSIDE.contains(child.getNode().getElementType())) {
+                if (!findInside(child)) return false;
+            }
+        }
+        return true;
     }
 
     @Override

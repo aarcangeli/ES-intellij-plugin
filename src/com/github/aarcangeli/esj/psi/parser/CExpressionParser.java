@@ -53,7 +53,13 @@ public class CExpressionParser implements CElementTypes {
             }
             if (!ALL_EXPRESSIONS.contains(type)) break;
             if (mark == null) mark = builder.mark();
-            builder.advanceLexer();
+            if (type == IDENTIFIER) {
+                PsiBuilder.Marker ref = builder.mark();
+                builder.advanceLexer();
+                ref.done(SE_REFERENCE_EXPRESSION);
+            } else {
+                builder.advanceLexer();
+            }
         }
         if (mark != null) {
             mark.done(SE_EXPRESSION);

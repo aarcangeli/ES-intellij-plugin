@@ -6,8 +6,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
-import static com.github.aarcangeli.esj.psi.CElementTypes.SE_CPP_BLOCK;
-import static com.github.aarcangeli.esj.psi.CElementTypes.SE_EVENT_SPECIFICATION;
+import static com.github.aarcangeli.esj.psi.CElementTypes.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CParserUtils {
@@ -117,9 +116,11 @@ public class CParserUtils {
     }
 
     static void parseJumpTarget(PsiBuilder builder) {
+        PsiBuilder.Marker mark = builder.mark();
         if (!expect(builder, IDENTIFIER)) {
             builder.error("Identifier expected");
         }
+        mark.done(SE_REFERENCE_EXPRESSION);
 
         if (expect(builder, COLON)) {
             if (!expect(builder, COLON)) {
