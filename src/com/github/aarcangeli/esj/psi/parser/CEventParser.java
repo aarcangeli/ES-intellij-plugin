@@ -12,7 +12,6 @@ public class CEventParser implements CElementTypes {
     public static final TokenSet NOT_GARBAGE = TokenSet.orSet(CTypeParser.TYPE_START, TokenSet.create(COMMA));
     public static final TokenSet EVENT_FIELD_START = CTypeParser.TYPE_START;
 
-
     static void parseEventDeclaration(PsiBuilder builder) {
         assert builder.getTokenType() == K_EVENT;
         PsiBuilder.Marker statement = builder.mark();
@@ -28,7 +27,7 @@ public class CEventParser implements CElementTypes {
         reportExtraElement(builder, COMMA, "event cannot start with ','");
 
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, NOT_GARBAGE, "event field expected")) continue;
+            if (eatGarbage(builder, NOT_GARBAGE, "event field expected", true)) continue;
             if (expect(builder, COMMA)) continue;
 
             parseEventField(builder);

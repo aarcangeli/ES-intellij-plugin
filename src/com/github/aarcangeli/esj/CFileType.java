@@ -1,6 +1,7 @@
 package com.github.aarcangeli.esj;
 
 import com.github.aarcangeli.esj.icons.CIcons;
+import com.intellij.openapi.fileTypes.FileNameMatcher;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 import com.intellij.openapi.fileTypes.LanguageFileType;
@@ -49,6 +50,17 @@ public class CFileType extends LanguageFileType {
         @Override
         public void createFileTypes(@NotNull FileTypeConsumer fileTypeConsumer) {
             fileTypeConsumer.consume(INSTANCE, "es");
+            fileTypeConsumer.consume(INSTANCE, new FileNameMatcher() {
+                @Override
+                public boolean accept(@NotNull String filename) {
+                    return filename.toLowerCase().endsWith(".es");
+                }
+
+                @Override
+                public @NotNull String getPresentableString() {
+                    return "matcher";
+                }
+            });
         }
     }
 }

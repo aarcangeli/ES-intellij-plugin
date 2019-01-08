@@ -5,6 +5,8 @@ import com.github.aarcangeli.esj.psi.parser.CExpressionParser.ExpressionContext;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
 
+import java.util.Objects;
+
 import static com.intellij.lang.PsiBuilder.Marker;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
@@ -79,6 +81,25 @@ public class CStatementParser implements CElementTypes {
         if (tokenType == K_PASS) return parseSingleTokenStatement(builder, SE_PASS_STATEMENT);
         if (tokenType == K_TRY) return parseTryStatement(builder);
         if (tokenType == SEMICOLON) return parseEmptyStatement(builder);
+        if (tokenType == IDENTIFIER) {
+            String tokenText = builder.getTokenText();
+            // special macro
+            if ("FOREACHINLIST".equals(tokenText)) {
+                return parseGenericMacro(builder, SE_FOREACHINLIST_MACRO);
+            }
+            if ("FOREACHINSTATICARRAY".equals(tokenText)) {
+                return parseGenericMacro(builder, SE_FOREACHINSTATICARRAY_MACRO);
+            }
+            if ("FOREACHINDYNAMICARRAY".equals(tokenText)) {
+                return parseGenericMacro(builder, SE_FOREACHINDYNAMICARRAY_MACRO);
+            }
+            if ("FOREACHINDYNAMICCONTAINER".equals(tokenText)) {
+                return parseGenericMacro(builder, SE_FOREACHINDYNAMICCONTAINER_MACRO);
+            }
+            if ("FOREVER".equals(tokenText)) {
+                return parseFOREVER(builder);
+            }
+        }
         Marker expression = CExpressionParser.parseExpression(builder, ExpressionContext.STATEMENT);
         if (expression != null) {
             if (!expect(builder, SEMICOLON)) {
@@ -382,6 +403,33 @@ public class CStatementParser implements CElementTypes {
         Marker statement = builder.mark();
         builder.advanceLexer();
         statement.done(SE_EMPTY_STATEMENT);
+        return statement;
+    }
+
+    private static Marker parseGenericMacro(PsiBuilder builder, IElementType type) {
+        assert builder.getTokenType() == IDENTIFIER;
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        if (!CParserUtils.parseExpressionInParenth(builder, true)) {
+            statement.done(SE_IF_STATEMENT);
+            return statement;
+        }
+
+        parseRequiredCodeBlock(builder);
+
+        statement.done(type);
+        return statement;
+    }
+
+    private static Marker parseFOREVER(PsiBuilder builder) {
+        assert builder.getTokenType() == IDENTIFIER && Objects.equals(builder.getTokenText(), "FOREVER");
+        Marker statement = builder.mark();
+        builder.advanceLexer();
+
+        parseRequiredCodeBlock(builder);
+
+        statement.done(SE_FOREVER_MACRO);
         return statement;
     }
 }

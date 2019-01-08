@@ -26,8 +26,10 @@ public class CComponentParser implements CElementTypes {
             builder.error("':' expected");
         }
 
+        reportExtraElement(builder, COMMA, "',' unexpected");
+
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, NOT_GARBAGE, "component expected")) continue;
+            if (eatGarbage(builder, NOT_GARBAGE, "component expected", true)) continue;
             if (CClassParser.CLASS_LABELS.contains(builder.getTokenType())) break;
             if (expect(builder, COMMA)) continue;
 

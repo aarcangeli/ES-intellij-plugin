@@ -6,6 +6,7 @@ import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.eatGarbage;
+import static com.github.aarcangeli.esj.psi.parser.CParserUtils.reportExtraElement;
 import static com.intellij.lang.PsiBuilder.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
@@ -14,7 +15,6 @@ public class CFunctionParser implements CElementTypes {
     private static final TokenSet MODIFIERS = TokenSet.create(K_EXPORT, K_VIRTUAL);
     private static final TokenSet FUNCTION_START = TokenSet.orSet(MODIFIERS, CTypeParser.TYPE_START);
 
-    private static final TokenSet PARAMETER_START = TokenSet.orSet(CTypeParser.TYPE_START, TokenSet.create(IDENTIFIER));
     private static final TokenSet PARAMETER_STOPPERS = TokenSet.create(RPARENTH, LBRACE);
 
     private static final TokenSet NOT_GARBAGE = TokenSet.orSet(FUNCTION_START, CClassParser.CLASS_LABELS);
@@ -30,7 +30,7 @@ public class CFunctionParser implements CElementTypes {
         }
 
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, NOT_GARBAGE, "function expected")) continue;
+            if (eatGarbage(builder, NOT_GARBAGE, "function expected", true)) continue;
             if (CClassParser.CLASS_LABELS.contains(builder.getTokenType())) break;
 
             parseFunction(builder);

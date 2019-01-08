@@ -2,11 +2,9 @@ package com.github.aarcangeli.esj.psi.parser;
 
 import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.psi.parser.CParserUtils.eatGarbage;
-import static com.intellij.lang.PsiBuilderUtil.*;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CProcedureParser implements CElementTypes {
@@ -22,7 +20,7 @@ public class CProcedureParser implements CElementTypes {
         }
 
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, NOT_GARBAGE, "procedure expected")) continue;
+            if (eatGarbage(builder, NOT_GARBAGE, "procedure expected", true)) continue;
             if (CClassParser.CLASS_LABELS.contains(builder.getTokenType())) break;
 
             parseProcedure(builder);

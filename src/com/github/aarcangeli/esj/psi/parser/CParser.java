@@ -41,16 +41,14 @@ public class CParser implements PsiParser, CElementTypes {
 
         optionalBlock(builder);
 
-        while (builder.getTokenType() == K_USES) {
-            parseUsesStatement(builder);
-        }
-
         while (!builder.eof()) {
-            eatGarbage(builder, SET_STATEMENT_START, "'enum', 'event' or 'enum' expected", false);
+            eatGarbage(builder, SET_STATEMENT_START, "'enum', 'event' or 'class' expected", false);
             IElementType type = builder.getTokenType();
 
             if (type == CPP_BLOCK_BEGIN) {
                 processBlock(builder);
+            } else if (type == K_USES) {
+                parseUsesStatement(builder);
             } else if (type == K_ENUM) {
                 CEnumParser.parseEnumDeclaration(builder);
             } else if (type == K_EVENT) {
@@ -66,7 +64,11 @@ public class CParser implements PsiParser, CElementTypes {
         Marker statement = builder.mark();
         builder.advanceLexer();
 
-        if (!expect(builder, C_STRING)) {
+        if (builder.getTokenType() == IDENTIFIER) {
+            Marker error = builder.mark();
+            builder.advanceLexer();
+            error.error("string expected");
+        } else if (!expect(builder, C_STRING)) {
             builder.error("string expected");
         }
         if (!expect(builder, SEMICOLON)) {

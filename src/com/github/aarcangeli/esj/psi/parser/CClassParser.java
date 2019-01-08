@@ -33,6 +33,8 @@ public class CClassParser implements CElementTypes {
         }
         if (!expect(builder, LBRACE)) {
             builder.error("'{' expected");
+            statement.done(SE_CLASS_STATEMENT);
+            return;
         }
 
         parseClassBody(builder);
@@ -48,7 +50,7 @@ public class CClassParser implements CElementTypes {
 
     private static void parseClassBody(PsiBuilder builder) {
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, START_POINTS, "statement expected")) continue;
+            if (eatGarbage(builder, START_POINTS, "statement expected", true)) continue;
             IElementType type = builder.getTokenType();
             if (CLASS_ATTRIBUTES.contains(type)) {
                 parseAttribute(builder);
@@ -76,11 +78,7 @@ public class CClassParser implements CElementTypes {
                 builder.error("value expected");
                 if (builder.getTokenType() != COMMA) break;
             }
-            if (builder.getTokenType() != COMMA) break;
-            if (!expect(builder, COMMA)) {
-                builder.error("';' or ',' expected");
-                break;
-            }
+            if (!expect(builder, COMMA)) break;
             reportExtraElement(builder, COMMA, "repeated ','");
         }
         if (!expect(builder, SEMICOLON)) {

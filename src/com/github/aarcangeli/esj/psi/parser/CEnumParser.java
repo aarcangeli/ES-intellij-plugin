@@ -27,7 +27,7 @@ public class CEnumParser implements CElementTypes {
         reportExtraElement(builder, COMMA, "enum cannot start with ','");
 
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, NOT_GARBAGE, "field expected")) continue;
+            if (eatGarbage(builder, NOT_GARBAGE, "field expected", true)) continue;
             if (expect(builder, COMMA)) continue;
 
             parseEnummField(builder);

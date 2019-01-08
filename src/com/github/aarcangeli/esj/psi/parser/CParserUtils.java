@@ -7,19 +7,17 @@ import com.intellij.psi.tree.TokenSet;
 
 import static com.github.aarcangeli.esj.lexer.CTokens.*;
 import static com.github.aarcangeli.esj.psi.CElementTypes.SE_CPP_BLOCK;
+import static com.github.aarcangeli.esj.psi.CElementTypes.SE_EVENT_SPECIFICATION;
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
 public class CParserUtils {
-    static boolean eatGarbage(PsiBuilder builder, TokenSet notGarbage, String message) {
-        return eatGarbage(builder, notGarbage, message, true);
-    }
 
     static boolean eatGarbage(PsiBuilder builder, TokenSet notGarbage, String message, boolean closeWithBrace) {
         int braceCount = 0;
         IElementType type = builder.getTokenType();
         if (!builder.eof() && !notGarbage.contains(type)) {
             PsiBuilder.Marker err = builder.mark();
-            while (!builder.eof() && (braceCount != 0 || !notGarbage.contains(type))) {
+            while (!builder.eof() && (braceCount > 0 || !notGarbage.contains(type))) {
                 if (type == LBRACE) braceCount++;
                 if (type == RBRACE) {
                     if (closeWithBrace && braceCount == 0) break;
@@ -74,6 +72,7 @@ public class CParserUtils {
     }
 
     static void parseEventSpecification(PsiBuilder builder) {
+        PsiBuilder.Marker specification = builder.mark();
         if (!expect(builder, LPARENTH)) {
             builder.error("'(' expected");
         } else {
@@ -84,6 +83,7 @@ public class CParserUtils {
                 builder.error("')' expected");
             }
         }
+        specification.done(SE_EVENT_SPECIFICATION);
     }
 
     static boolean parseExpressionInParenth(PsiBuilder builder) {

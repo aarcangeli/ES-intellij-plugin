@@ -36,8 +36,10 @@ public class CPropertyParser implements CElementTypes {
             builder.error("':' expected");
         }
 
+        reportExtraElement(builder, COMMA, "',' unexpected");
+
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, NOT_GARBAGE, "property expected")) continue;
+            if (eatGarbage(builder, NOT_GARBAGE, "property expected", true)) continue;
             if (CClassParser.CLASS_LABELS.contains(builder.getTokenType())) break;
             if (expect(builder, COMMA)) continue;
             if (builder.getTokenType() == LBRACE) {
@@ -65,8 +67,10 @@ public class CPropertyParser implements CElementTypes {
         Marker internalProperty = builder.mark();
         builder.advanceLexer();
 
+        reportExtraElement(builder, SEMICOLON, "';' unexpected");
+
         while (!builder.eof() && builder.getTokenType() != RBRACE) {
-            if (eatGarbage(builder, NOT_GARBAGE_INTERNAL, "internal property expected")) continue;
+            if (eatGarbage(builder, NOT_GARBAGE_INTERNAL, "internal property expected", true)) continue;
             if (expect(builder, SEMICOLON)) continue;
             if (CClassParser.CLASS_LABELS.contains(builder.getTokenType())) break;
 
@@ -104,6 +108,7 @@ public class CPropertyParser implements CElementTypes {
         if (!PsiBuilderUtil.expect(builder, C_INT)) {
             builder.error("number expected");
         }
+        Marker type = builder.mark();
         if (!expect(builder, PROPERTY_TYPE)) {
             if (expect(builder, PROPERTY_TYPE_WITH_IDENTIFIER)) {
                 if (!PsiBuilderUtil.expect(builder, IDENTIFIER)) {
@@ -113,6 +118,7 @@ public class CPropertyParser implements CElementTypes {
                 builder.error("property type expected");
             }
         }
+        type.done(CElementTypes.SE_TYPE);
         if (!PsiBuilderUtil.expect(builder, IDENTIFIER)) {
             builder.error("identifier expected");
         }

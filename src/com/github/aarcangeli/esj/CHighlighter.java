@@ -31,7 +31,7 @@ public class CHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey KEY_STRING = TextAttributesKey.createTextAttributesKey("ES_STRING", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey KEY_BAD_CHARACTER = createTextAttributesKey("ES_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
     public static final TextAttributesKey KEY_NUMBER = createTextAttributesKey("ES_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
-    public static final TextAttributesKey KEY_CPP_BLOCK = TextAttributesKey.createTextAttributesKey("CG_CPP_BLOCK", EditorColors.INJECTED_LANGUAGE_FRAGMENT);
+    public static final TextAttributesKey KEY_CPP_BLOCK = TextAttributesKey.createTextAttributesKey("ES_CPP_BLOCK", EditorColors.INJECTED_LANGUAGE_FRAGMENT);
 
     private static final Map<IElementType, TextAttributesKey> ourMap = new HashMap<>();
 
