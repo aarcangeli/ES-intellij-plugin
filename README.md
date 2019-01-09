@@ -5,4 +5,7 @@ This is an unofficial plugin for IntelliJ based products that provide an easier 
 **Warning: this is a sandbox project, it does not pretend to work and it can be discontinued at any time**
 
 ### Features
-* Syntax highlighting for keywords, strings, comments ecc.
+* Syntax highlighting
+* Code References
+* Find Usages
+* Go To Class

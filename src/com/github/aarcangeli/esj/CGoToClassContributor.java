@@ -9,14 +9,11 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static com.github.aarcangeli.esj.psi.CElementTypes.*;
 
 public class CGoToClassContributor implements ChooseByNameContributor {
 
