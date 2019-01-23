@@ -33,6 +33,9 @@
         <!-- Implement Go To Class (Ctrl+N) for ES classes -->
         <gotoClassContributor implementation="com.github.aarcangeli.esj.CGoToClassContributor"/>
 
+        <!-- Implement Go To Symbol (Ctrl+Shift+Alt+N) for ES fields -->
+        <gotoSymbolContributor implementation="com.github.aarcangeli.esj.CGoToSymbolContributor"/>
+
     </extensions>
 
     <actions>

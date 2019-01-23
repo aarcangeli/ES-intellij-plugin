@@ -38,7 +38,6 @@ public class CGoToClassContributor implements ChooseByNameContributor {
             }
             return true;
         });
-        System.out.println(all);
         return all.toArray(new String[0]);
     }
 
