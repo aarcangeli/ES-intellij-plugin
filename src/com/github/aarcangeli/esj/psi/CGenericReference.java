@@ -35,15 +35,22 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
     @Override
     @Nullable
     public PsiElement resolve() {
-
+        PsiFile file = getElement().getContainingFile();
+        PsiElement it = getElement();
+        // find named psi inside every parent until file
+        while (it != file) {
+            PsiElement lastChild = it;
+            it = it.getParent();
+            if (!findInside(it, lastChild)) return resolved;
+        }
         //FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, JavaFileType.INSTANCE, GlobalSearchScope.projectScope(project))
         Project project = getElement().getProject();
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
         fileIndex.iterateContent(virtualFile -> {
             if (virtualFile.getFileType() == CFileType.INSTANCE) {
-                PsiFile file = PsiManager.getInstance(project).findFile(virtualFile);
-                if (file != null) {
-                    if (!findInside(file)) return false;
+                PsiFile itFile = PsiManager.getInstance(project).findFile(virtualFile);
+                if (itFile != null) {
+                    return findInside(itFile, null);
                 }
             }
             return true;
@@ -51,17 +58,19 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
         return resolved;
     }
 
-    private boolean findInside(PsiElement element) {
+    private boolean findInside(PsiElement element, PsiElement lastChild) {
         for (PsiElement child : element.getChildren()) {
-            if (child instanceof CAbstractNamedIdentifier) {
-                CAbstractNamedIdentifier statement = (CAbstractNamedIdentifier) child;
-                if (Objects.equals(statement.getName(), name)) {
-                    resolved = child;
-                    return false;
+            if (lastChild != child) {
+                if (child instanceof CAbstractNamedIdentifier) {
+                    CAbstractNamedIdentifier statement = (CAbstractNamedIdentifier) child;
+                    if (Objects.equals(statement.getName(), name)) {
+                        resolved = child;
+                        return false;
+                    }
                 }
-            }
-            if (SET_TO_GO_INSIDE.contains(child.getNode().getElementType())) {
-                if (!findInside(child)) return false;
+                if (SET_TO_GO_INSIDE.contains(child.getNode().getElementType())) {
+                    if (!findInside(child, null)) return false;
+                }
             }
         }
         return true;

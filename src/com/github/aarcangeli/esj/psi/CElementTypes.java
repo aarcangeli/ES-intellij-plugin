@@ -30,7 +30,7 @@ public interface CElementTypes extends CTokens {
     IElementType SE_CPP_BLOCK = new CCompositeElementType("SE_CPP_BLOCK");
 
     // types
-    IElementType SE_TYPE = new CCompositeElementType("SE_TYPE");
+    IElementType SE_TYPE = new CCompositeElementType("SE_TYPE", CType.class);
     IElementType SE_TYPE_MODIFIERS = new CCompositeElementType("SE_TYPE_MODIFIERS");
 
     // use statement
