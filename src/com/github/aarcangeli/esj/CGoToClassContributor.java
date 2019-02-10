@@ -1,20 +1,16 @@
 package com.github.aarcangeli.esj;
 
-import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
-import com.github.aarcangeli.esj.psi.composite.SeClassImpl;
-import com.github.aarcangeli.esj.psi.composite.CEnumStatement;
-import com.github.aarcangeli.esj.psi.composite.CEventStatement;
+import com.github.aarcangeli.esj.psi.headers.SeFile;
+import com.github.aarcangeli.esj.psi.headers.SeFileMember;
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,44 +19,33 @@ public class CGoToClassContributor implements ChooseByNameContributor {
     @NotNull
     @Override
     public String[] getNames(Project project, boolean includeNonProjectItems) {
-        ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        List<String> all = new ArrayList<>();
-        fileIndex.iterateContent(virtualFile -> {
-            if (virtualFile.getFileType() == CFileType.INSTANCE) {
-                PsiFile file = PsiManager.getInstance(project).findFile(virtualFile);
-                if (file != null) {
-                    for (PsiElement child : file.getChildren()) {
-                        if (child instanceof SeClassImpl || child instanceof CEventStatement || child instanceof CEnumStatement) {
-                            all.add(((CAbstractNamedIdentifier) child).getName());
-                        }
-                    }
-                }
-            }
-            return true;
-        });
-        return all.toArray(new String[0]);
+        return getAllSymbolsInProgect(project)
+                .stream()
+                .map(SeFileMember::getName)
+                .filter(Objects::nonNull)
+                .toArray(String[]::new);
     }
 
     @NotNull
     @Override
     public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
-        ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        List<NavigationItem> all = new ArrayList<>();
-        fileIndex.iterateContent(virtualFile -> {
+        return getAllSymbolsInProgect(project)
+                .stream()
+                .filter(symbol -> Objects.equals(symbol.getName(), name))
+                .toArray(NavigationItem[]::new);
+    }
+
+    List<SeFileMember> getAllSymbolsInProgect(Project project) {
+        List<SeFileMember> result = new ArrayList<>();
+        ProjectRootManager.getInstance(project).getFileIndex().iterateContent(virtualFile -> {
             if (virtualFile.getFileType() == CFileType.INSTANCE) {
-                PsiFile file = PsiManager.getInstance(project).findFile(virtualFile);
+                SeFile file = (SeFile) PsiManager.getInstance(project).findFile(virtualFile);
                 if (file != null) {
-                    for (PsiElement child : file.getChildren()) {
-                        if (child instanceof SeClassImpl || child instanceof CEventStatement || child instanceof CEnumStatement) {
-                            if (Objects.equals(((CAbstractNamedIdentifier) child).getName(), name)) {
-                                all.add((NavigationItem) child);
-                            }
-                        }
-                    }
+                    result.addAll(Arrays.asList(file.getMembers()));
                 }
             }
             return true;
         });
-        return all.toArray(new NavigationItem[0]);
+        return result;
     }
 }
