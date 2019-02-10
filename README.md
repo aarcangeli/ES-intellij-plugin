@@ -4,7 +4,7 @@ This is an unofficial plugin for IntelliJ based products that provide an easier 
 
 **Warning: this is a sandbox project, it does not pretend to work and it can be discontinued at any time**
 
-### Features
+## Features
 * Syntax highlighting
 ![Syntax highlighting](docs/gifs/syntax.png)
 

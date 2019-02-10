@@ -20,9 +20,6 @@ public class CParser implements PsiParser, CElementTypes {
     @NotNull
     @Override
     public ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder) {
-        // TODO: Remove debug mode
-        builder.setDebugMode(true);
-
         Marker rootMark = builder.mark();
         parseContent(builder);
         rootMark.done(root);

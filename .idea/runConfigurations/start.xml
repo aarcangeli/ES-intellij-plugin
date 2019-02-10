@@ -3,6 +3,7 @@
     <module name="ES-intellij-plugin" />
     <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -ea" />
     <option name="PROGRAM_PARAMETERS" value="" />
+    <alternative-path path="Android Studio AI-181.5540.7.32.5056338" alternative-path-enabled="true" />
     <predefined_log_file enabled="true" id="idea.log" />
     <method v="2">
       <option name="Make" enabled="true" />

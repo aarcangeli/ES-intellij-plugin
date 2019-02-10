@@ -41,6 +41,11 @@
 
     </extensions>
 
+    <!-- CLion and Android Studio -->
+    <extensions defaultExtensionNs="cidr.debugger">
+        <lineBreakpointFileTypesProvider implementation="com.github.aarcangeli.esj.cidr.CLineBreakpointFileTypesProvider"/>
+    </extensions>
+
     <actions>
     </actions>
 

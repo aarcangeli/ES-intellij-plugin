@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ES-intellij-plugin.iml" filepath="$PROJECT_DIR$/ES-intellij-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esj-cidr-integration/esj-cidr-integration.iml" filepath="$PROJECT_DIR$/esj-cidr-integration/esj-cidr-integration.iml" />
       <module fileurl="file://$PROJECT_DIR$/esj-core/esj-core.iml" filepath="$PROJECT_DIR$/esj-core/esj-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/esj-impl/esj-impl.iml" filepath="$PROJECT_DIR$/esj-impl/esj-impl.iml" />
     </modules>
