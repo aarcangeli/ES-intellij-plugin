@@ -2,7 +2,6 @@ package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.CFileType;
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
-import com.github.aarcangeli.esj.psi.headers.SeClass;
 import com.github.aarcangeli.esj.utils.PsiUtils;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -10,7 +9,6 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.scope.BaseScopeProcessor;
-import com.intellij.psi.scope.PsiScopeProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

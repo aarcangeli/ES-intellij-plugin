@@ -1,5 +1,6 @@
 package com.github.aarcangeli.esj;
 
+import com.github.aarcangeli.esj.CFileType;
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;

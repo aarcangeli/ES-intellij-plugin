@@ -2,8 +2,8 @@ package com.github.aarcangeli.esj.psi.composite;
 
 import com.github.aarcangeli.esj.icons.CIcons;
 import com.github.aarcangeli.esj.psi.CElementTypes;
-import com.github.aarcangeli.esj.psi.headers.SeFile;
-import com.github.aarcangeli.esj.psi.headers.SeFileMember;
+import com.github.aarcangeli.esj.psi.SeFile;
+import com.github.aarcangeli.esj.psi.SeFileMember;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.ResolveState;

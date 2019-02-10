@@ -1,7 +1,6 @@
 package com.github.aarcangeli.esj.psi.composite;
 
 import com.github.aarcangeli.esj.psi.CElementTypes;
-import com.github.aarcangeli.esj.psi.headers.SeMember;
 import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class CPropertyField extends CAbstractMember implements PsiNameIdentifierOwner {

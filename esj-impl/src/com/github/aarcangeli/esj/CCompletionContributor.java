@@ -1,8 +1,8 @@
 package com.github.aarcangeli.esj;
 
 import com.github.aarcangeli.esj.psi.CElementTypes;
+import com.github.aarcangeli.esj.psi.SeClass;
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
-import com.github.aarcangeli.esj.psi.headers.SeClass;
 import com.github.aarcangeli.esj.utils.PsiUtils;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;

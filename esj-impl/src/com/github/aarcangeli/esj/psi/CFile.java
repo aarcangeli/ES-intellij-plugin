@@ -2,8 +2,6 @@ package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.CFileType;
 import com.github.aarcangeli.esj.CLanguage;
-import com.github.aarcangeli.esj.psi.headers.SeFile;
-import com.github.aarcangeli.esj.psi.headers.SeFileMember;
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;

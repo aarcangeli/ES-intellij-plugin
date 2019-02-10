@@ -1,4 +1,4 @@
-package com.github.aarcangeli.esj.psi.headers;
+package com.github.aarcangeli.esj.psi;
 
 import com.intellij.psi.PsiElement;
 

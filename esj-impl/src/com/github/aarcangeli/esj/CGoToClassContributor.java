@@ -1,7 +1,7 @@
 package com.github.aarcangeli.esj;
 
-import com.github.aarcangeli.esj.psi.headers.SeFile;
-import com.github.aarcangeli.esj.psi.headers.SeFileMember;
+import com.github.aarcangeli.esj.psi.SeFile;
+import com.github.aarcangeli.esj.psi.SeFileMember;
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;

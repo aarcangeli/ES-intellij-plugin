@@ -1,8 +1,6 @@
 package com.github.aarcangeli.esj.psi.composite;
 
-import com.github.aarcangeli.esj.lexer.CTokenSets;
 import com.github.aarcangeli.esj.psi.CElementTypes;
-import com.github.aarcangeli.esj.psi.headers.SeMember;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
@@ -13,8 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.github.aarcangeli.esj.lexer.CTokens.IDENTIFIER;
 
 public class CFunction extends CAbstractMember implements PsiNameIdentifierOwner {
     private TokenSet PARAMETER_SET = TokenSet.create(CElementTypes.SE_PARAMETER);
