@@ -1,4 +1,4 @@
-# WIP Serious Engine .es File Support 4 the IntelliJ Platform
+# Serious Engine .es File Integration 4 the IntelliJ Platform
 
 This is an unofficial plugin for IntelliJ based products that provide an easier way to edit .es files
 
@@ -6,6 +6,19 @@ This is an unofficial plugin for IntelliJ based products that provide an easier 
 
 ### Features
 * Syntax highlighting
+![Syntax highlighting](docs/gifs/syntax.png)
+
 * Code References
+![Code References](docs/gifs/references.gif)
+
 * Find Usages
+![Find Usages](docs/gifs/find-usages.gif)
+
 * Go To Class
+![Go To Class](docs/gifs/goto-class.gif)
+
+### Known issues
+  - There aren't any type of index
+  - Method body expression's are not fully parsed
+  - Code completion at 80% suggests non-compiling code
+  - Psi reference does not resolve c++ references
