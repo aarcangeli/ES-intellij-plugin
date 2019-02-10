@@ -27,9 +27,11 @@ public class CClassParser implements CElementTypes {
             builder.error("identifier expected");
         }
         if (expect(builder, COLON)) {
+            Marker mark = builder.mark();
             if (!expect(builder, IDENTIFIER)) {
                 builder.error("identifier expected");
             }
+            mark.done(SE_CLASS_SUPER_REF);
         }
         if (!expect(builder, LBRACE)) {
             builder.error("'{' expected");

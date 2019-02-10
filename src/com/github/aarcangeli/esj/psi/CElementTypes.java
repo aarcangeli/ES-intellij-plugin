@@ -47,6 +47,7 @@ public interface CElementTypes extends CTokens {
 
     // class
     IElementType SE_CLASS_STATEMENT = new CCompositeElementType("SE_CLASS_STATEMENT", SeClassImpl.class);
+    IElementType SE_CLASS_SUPER_REF = new CCompositeElementType("SE_CLASS_SUPER_REF", SeClassSuperReference.class);
     IElementType SE_CLASS_ATTRIBUTE = new CCompositeElementType("SE_CLASS_ATTRIBUTE");
 
     IElementType SE_PROPERTIES_BLOCK = new CCompositeElementType("SE_PROPERTIES_BLOCK");

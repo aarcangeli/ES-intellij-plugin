@@ -1,7 +1,5 @@
 package com.github.aarcangeli.esj.psi.headers;
 
-import com.intellij.psi.PsiElement;
-
 /**
  * Represents a class
  */

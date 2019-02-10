@@ -32,9 +32,6 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
     public PsiElement resolve() {
         resolved = null;
         if (!findInside(getElement())) return resolved;
-        // todo: resolve in parent class
-        if ("".isEmpty()) return null;
-        //FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, JavaFileType.INSTANCE, GlobalSearchScope.projectScope(project))
         Project project = getElement().getProject();
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
         fileIndex.iterateContent(virtualFile -> {
