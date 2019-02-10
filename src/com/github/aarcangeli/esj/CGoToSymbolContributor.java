@@ -1,13 +1,9 @@
 package com.github.aarcangeli.esj;
 
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
-import com.github.aarcangeli.esj.psi.composite.CClassStatement;
-import com.github.aarcangeli.esj.psi.composite.CEnumStatement;
-import com.github.aarcangeli.esj.psi.composite.CEventStatement;
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -16,7 +12,6 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 

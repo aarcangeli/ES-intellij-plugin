@@ -1,7 +1,7 @@
 package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.CFileType;
-import com.github.aarcangeli.esj.psi.composite.CClassStatement;
+import com.github.aarcangeli.esj.psi.composite.SeClassImpl;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -12,7 +12,7 @@ public class SePsiUtils {
         if (!newName.equals(oldElement.getText())) {
             PsiFileFactory factory = PsiFileFactory.getInstance(oldElement.getProject());
             PsiFile file = factory.createFileFromText("dummy.es", CFileType.INSTANCE, "class " + newName);
-            CClassStatement childClass = ((CFile) file).findChildByClass(CClassStatement.class);
+            SeClassImpl childClass = ((CFile) file).findChildByClass(SeClassImpl.class);
             if (childClass != null) {
                 PsiElement nameIdentifier = childClass.getNameIdentifier();
                 if (nameIdentifier != null) {

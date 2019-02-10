@@ -1,8 +1,6 @@
 package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.lexer.CLexerAdapter;
-import com.github.aarcangeli.esj.lexer.CTokenSets;
-import com.github.aarcangeli.esj.lexer.CTokens;
 import com.github.aarcangeli.esj.psi.composite.*;
 import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
@@ -42,7 +40,7 @@ public class CFindUsageProvider implements FindUsagesProvider {
         if (psiElement instanceof CProcedure) return "procedure";
         if (psiElement instanceof CFunction) return "function";
         if (psiElement instanceof CPropertyField) return "property";
-        if (psiElement instanceof CClassStatement) return "class";
+        if (psiElement instanceof SeClassImpl) return "class";
         if (psiElement instanceof CComponentField) return "component";
         return "type";
     }

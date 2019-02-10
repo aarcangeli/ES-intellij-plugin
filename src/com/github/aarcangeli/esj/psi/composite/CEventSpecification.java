@@ -3,6 +3,7 @@ package com.github.aarcangeli.esj.psi.composite;
 import com.github.aarcangeli.esj.lexer.CTokenSets;
 import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.github.aarcangeli.esj.psi.CGenericReference;
+import com.github.aarcangeli.esj.utils.PsiUtils;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
@@ -15,7 +16,8 @@ public class CEventSpecification extends CAbstractNamedIdentifier {
     }
 
     @Override
-    public @Nullable PsiElement getNameIdentifier() {
+    @Nullable
+    public PsiElement getNameIdentifier() {
         ASTNode[] childrens = getChildren(CTokenSets.IDENTIFIER_SET);
         if (childrens.length > 1) {
             return childrens[1].getPsi();
@@ -36,7 +38,7 @@ public class CEventSpecification extends CAbstractNamedIdentifier {
     public PsiReference getReference() {
         PsiElement refFrom = getEventType();
         if (refFrom != null) {
-            return new CGenericReference(this, refFrom.getTextRangeInParent(), refFrom.getText());
+            return new CGenericReference(this, PsiUtils.getTextRangeInParent(refFrom), refFrom.getText());
         }
         return null;
     }

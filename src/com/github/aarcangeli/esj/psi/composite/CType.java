@@ -3,6 +3,7 @@ package com.github.aarcangeli.esj.psi.composite;
 import com.github.aarcangeli.esj.lexer.CTokenSets;
 import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.github.aarcangeli.esj.psi.CGenericReference;
+import com.github.aarcangeli.esj.utils.PsiUtils;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
@@ -27,7 +28,7 @@ public class CType extends CompositePsiElement {
     public PsiReference getReference() {
         PsiElement refTo = getTypeIdentifier();
         if (refTo != null) {
-            return new CGenericReference(this, refTo.getTextRangeInParent(), refTo.getText());
+            return new CGenericReference(this, PsiUtils.getTextRangeInParent(refTo), refTo.getText());
         }
         return null;
     }

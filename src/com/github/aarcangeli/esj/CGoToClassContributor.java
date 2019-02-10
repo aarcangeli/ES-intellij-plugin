@@ -1,7 +1,7 @@
 package com.github.aarcangeli.esj;
 
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
-import com.github.aarcangeli.esj.psi.composite.CClassStatement;
+import com.github.aarcangeli.esj.psi.composite.SeClassImpl;
 import com.github.aarcangeli.esj.psi.composite.CEnumStatement;
 import com.github.aarcangeli.esj.psi.composite.CEventStatement;
 import com.intellij.navigation.ChooseByNameContributor;
@@ -30,7 +30,7 @@ public class CGoToClassContributor implements ChooseByNameContributor {
                 PsiFile file = PsiManager.getInstance(project).findFile(virtualFile);
                 if (file != null) {
                     for (PsiElement child : file.getChildren()) {
-                        if (child instanceof CClassStatement || child instanceof CEventStatement || child instanceof CEnumStatement) {
+                        if (child instanceof SeClassImpl || child instanceof CEventStatement || child instanceof CEnumStatement) {
                             all.add(((CAbstractNamedIdentifier) child).getName());
                         }
                     }
@@ -51,7 +51,7 @@ public class CGoToClassContributor implements ChooseByNameContributor {
                 PsiFile file = PsiManager.getInstance(project).findFile(virtualFile);
                 if (file != null) {
                     for (PsiElement child : file.getChildren()) {
-                        if (child instanceof CClassStatement || child instanceof CEventStatement || child instanceof CEnumStatement) {
+                        if (child instanceof SeClassImpl || child instanceof CEventStatement || child instanceof CEnumStatement) {
                             if (Objects.equals(((CAbstractNamedIdentifier) child).getName(), name)) {
                                 all.add((NavigationItem) child);
                             }

@@ -1,17 +1,14 @@
 package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.CFileType;
-import com.github.aarcangeli.esj.lexer.CTokens;
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
-import com.github.aarcangeli.esj.psi.composite.CClassStatement;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiReferenceBase;
+import com.intellij.psi.*;
+import com.intellij.psi.scope.BaseScopeProcessor;
+import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,8 +20,6 @@ import static com.github.aarcangeli.esj.psi.CElementTypes.*;
 public class CGenericReference extends PsiReferenceBase<PsiElement> {
     private final String name;
     private PsiElement resolved;
-    private final TokenSet SET_TO_GO_INSIDE = TokenSet.create(SE_CLASS_STATEMENT, SE_PROPERTIES_BLOCK, SE_COMPONENTS_BLOCK,
-            SE_FUNCTIONS_BLOCK, SE_PROCEDURES_BLOCK, SE_EVENT_STATEMENT, SE_ENUM_STATEMENT);
 
     public CGenericReference(@NotNull PsiElement element, @NotNull TextRange textRangeInElement, String name) {
         super(element, true);
@@ -35,14 +30,10 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
     @Override
     @Nullable
     public PsiElement resolve() {
-        PsiFile file = getElement().getContainingFile();
-        PsiElement it = getElement();
-        // find named psi inside every parent until file
-        while (it != file) {
-            PsiElement lastChild = it;
-            it = it.getParent();
-            if (!findInside(it, lastChild)) return resolved;
-        }
+        resolved = null;
+        if (!findInside(getElement())) return resolved;
+        // todo: resolve in parent class
+        if ("".isEmpty()) return null;
         //FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, JavaFileType.INSTANCE, GlobalSearchScope.projectScope(project))
         Project project = getElement().getProject();
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
@@ -50,7 +41,7 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
             if (virtualFile.getFileType() == CFileType.INSTANCE) {
                 PsiFile itFile = PsiManager.getInstance(project).findFile(virtualFile);
                 if (itFile != null) {
-                    return findInside(itFile, null);
+                    return findInside(itFile);
                 }
             }
             return true;
@@ -58,20 +49,27 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
         return resolved;
     }
 
-    private boolean findInside(PsiElement element, PsiElement lastChild) {
-        for (PsiElement child : element.getChildren()) {
-            if (lastChild != child) {
-                if (child instanceof CAbstractNamedIdentifier) {
-                    CAbstractNamedIdentifier statement = (CAbstractNamedIdentifier) child;
-                    if (Objects.equals(statement.getName(), name)) {
-                        resolved = child;
+    private boolean findInside(PsiElement element) {
+        PsiScopeProcessor processor = new BaseScopeProcessor() {
+            @Override
+            public boolean execute(@NotNull PsiElement element, @NotNull ResolveState state) {
+                if (element instanceof CAbstractNamedIdentifier) {
+                    if (Objects.equals(((CAbstractNamedIdentifier) element).getName(), name)) {
+                        resolved = element;
                         return false;
                     }
                 }
-                if (SET_TO_GO_INSIDE.contains(child.getNode().getElementType())) {
-                    if (!findInside(child, null)) return false;
-                }
+                return true;
             }
+        };
+        PsiFile file = getElement().getContainingFile();
+        PsiElement lastParent = null;
+        PsiElement it = element;
+        while (it != null && lastParent != file) {
+            if (!processor.execute(it, ResolveState.initial())) return false;
+            if (!it.processDeclarations(processor, ResolveState.initial(), lastParent, element)) return false;
+            lastParent = it;
+            it = it.getContext();
         }
         return true;
     }

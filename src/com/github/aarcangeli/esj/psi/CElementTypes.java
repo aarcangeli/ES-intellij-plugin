@@ -3,6 +3,7 @@ package com.github.aarcangeli.esj.psi;
 import com.github.aarcangeli.esj.CLanguage;
 import com.github.aarcangeli.esj.lexer.CTokens;
 import com.github.aarcangeli.esj.psi.composite.*;
+import com.github.aarcangeli.esj.psi.composites.CUseStatement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.tree.IElementType;
@@ -34,7 +35,7 @@ public interface CElementTypes extends CTokens {
     IElementType SE_TYPE_MODIFIERS = new CCompositeElementType("SE_TYPE_MODIFIERS");
 
     // use statement
-    IElementType SE_USE_STATEMENT = new CCompositeElementType("SE_USE_STATEMENT");
+    IElementType SE_USE_STATEMENT = new CCompositeElementType("SE_USE_STATEMENT", CUseStatement.class);
 
     // event statement
     IElementType SE_EVENT_STATEMENT = new CCompositeElementType("SE_EVENT_STATEMENT", CEventStatement.class);
@@ -45,7 +46,7 @@ public interface CElementTypes extends CTokens {
     IElementType SE_ENUM_FIELD = new CCompositeElementType("SE_ENUM_FIELD", CEnumField.class);
 
     // class
-    IElementType SE_CLASS_STATEMENT = new CCompositeElementType("SE_CLASS_STATEMENT", CClassStatement.class);
+    IElementType SE_CLASS_STATEMENT = new CCompositeElementType("SE_CLASS_STATEMENT", SeClassImpl.class);
     IElementType SE_CLASS_ATTRIBUTE = new CCompositeElementType("SE_CLASS_ATTRIBUTE");
 
     IElementType SE_PROPERTIES_BLOCK = new CCompositeElementType("SE_PROPERTIES_BLOCK");
@@ -66,7 +67,7 @@ public interface CElementTypes extends CTokens {
     IElementType SE_FUNCTION = new CCompositeElementType("SE_FUNCTION", CFunction.class);
     IElementType SE_FUNCTION_MODIFIERS = new CCompositeElementType("SE_FUNCTION_MODIFIERS");
     IElementType SE_PARAMETER_LIST = new CCompositeElementType("SE_PARAMETER_LIST");
-    IElementType SE_PARAMETER = new CCompositeElementType("SE_PARAMETER");
+    IElementType SE_PARAMETER = new CCompositeElementType("SE_PARAMETER", CParameter.class);
 
     IElementType SE_PROCEDURE = new CCompositeElementType("SE_PROCEDURE", CProcedure.class);
     IElementType SE_PROCEDURE_OVERRIDE = new CCompositeElementType("SE_PROCEDURE_OVERRIDE");
