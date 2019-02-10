@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="start" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+  <configuration default="false" name="Start IDEA" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
     <module name="ES-intellij-plugin" />
-    <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -ea" />
+    <option name="VM_PARAMETERS" value="-Xmx1024m -Xms256m -ea" />
     <option name="PROGRAM_PARAMETERS" value="" />
-    <alternative-path path="Android Studio AI-181.5540.7.32.5056338" alternative-path-enabled="true" />
+    <alternative-path path="Android Studio" alternative-path-enabled="false" />
     <predefined_log_file enabled="true" id="idea.log" />
     <method v="2">
       <option name="Make" enabled="true" />
