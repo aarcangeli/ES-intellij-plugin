@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SeClassImpl extends CAbstractNamedIdentifier implements PsiNameIdentifierOwner, SeClass {
-    private TokenSet BLOCK_SET = TokenSet.create(CElementTypes.SE_PROPERTIES_BLOCK,
-            CElementTypes.SE_COMPONENTS_BLOCK, CElementTypes.SE_FUNCTIONS_BLOCK, CElementTypes.SE_PROCEDURES_BLOCK);
-
     public SeClassImpl() {
         super(CElementTypes.SE_CLASS_STATEMENT);
     }

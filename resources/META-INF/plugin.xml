@@ -36,7 +36,7 @@
         <!-- Implement Go To Symbol (Ctrl+Shift+Alt+N) for ES fields -->
         <gotoSymbolContributor implementation="com.github.aarcangeli.esj.CGoToSymbolContributor"/>
 
-        <!-- Code completition -->
+        <!-- Code completition (Ctrl+Space) -->
         <completion.contributor language="SE1-ES" implementationClass="com.github.aarcangeli.esj.CCompletitionContributor"/>
 
     </extensions>
