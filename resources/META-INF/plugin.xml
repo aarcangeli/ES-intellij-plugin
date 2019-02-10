@@ -37,7 +37,7 @@
         <gotoSymbolContributor implementation="com.github.aarcangeli.esj.CGoToSymbolContributor"/>
 
         <!-- Code completition (Ctrl+Space) -->
-        <completion.contributor language="SE1-ES" implementationClass="com.github.aarcangeli.esj.CCompletitionContributor"/>
+        <completion.contributor language="SE1-ES" implementationClass="com.github.aarcangeli.esj.CCompletionContributor"/>
 
     </extensions>
 

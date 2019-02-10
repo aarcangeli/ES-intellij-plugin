@@ -13,6 +13,11 @@ public class SeClassSuperReference extends CompositePsiElement {
 
     @Override
     public PsiReference getReference() {
-        return getTextLength() != 0 ? new CGenericReference(this, new TextRange(0, getTextLength()), getText()) : null;
+        CGenericReference result = null;
+        if (getTextLength() != 0) {
+            result = new CGenericReference(this, new TextRange(0, getTextLength()), getText());
+            result.setOnlyClasses(true);
+        }
+        return result;
     }
 }

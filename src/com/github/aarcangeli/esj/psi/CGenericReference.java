@@ -2,6 +2,8 @@ package com.github.aarcangeli.esj.psi;
 
 import com.github.aarcangeli.esj.CFileType;
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
+import com.github.aarcangeli.esj.psi.headers.SeClass;
+import com.github.aarcangeli.esj.utils.PsiUtils;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -9,17 +11,15 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.scope.BaseScopeProcessor;
 import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-import static com.github.aarcangeli.esj.psi.CElementTypes.*;
-
 public class CGenericReference extends PsiReferenceBase<PsiElement> {
     private final String name;
     private PsiElement resolved;
+    private boolean onlyClasses;
 
     public CGenericReference(@NotNull PsiElement element, @NotNull TextRange textRangeInElement, String name) {
         super(element, true);
@@ -47,28 +47,19 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
     }
 
     private boolean findInside(PsiElement element) {
-        PsiScopeProcessor processor = new BaseScopeProcessor() {
+        return PsiUtils.processDeclarations(element, new BaseScopeProcessor() {
             @Override
-            public boolean execute(@NotNull PsiElement element, @NotNull ResolveState state) {
-                if (element instanceof CAbstractNamedIdentifier) {
-                    if (Objects.equals(((CAbstractNamedIdentifier) element).getName(), name)) {
-                        resolved = element;
+            public boolean execute(@NotNull PsiElement element1, @NotNull ResolveState state) {
+                if (element1 instanceof CAbstractNamedIdentifier) {
+                    if (onlyClasses && !(element1 instanceof SeClass)) return true;
+                    if (Objects.equals(((CAbstractNamedIdentifier) element1).getName(), name)) {
+                        resolved = element1;
                         return false;
                     }
                 }
                 return true;
             }
-        };
-        PsiFile file = getElement().getContainingFile();
-        PsiElement lastParent = null;
-        PsiElement it = element;
-        while (it != null && lastParent != file) {
-            if (!processor.execute(it, ResolveState.initial())) return false;
-            if (!it.processDeclarations(processor, ResolveState.initial(), lastParent, element)) return false;
-            lastParent = it;
-            it = it.getContext();
-        }
-        return true;
+        });
     }
 
     @Override
@@ -80,5 +71,9 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
     @Override
     public Object[] getVariants() {
         return new Object[]{};
+    }
+
+    public void setOnlyClasses(boolean onlyClasses) {
+        this.onlyClasses = onlyClasses;
     }
 }
