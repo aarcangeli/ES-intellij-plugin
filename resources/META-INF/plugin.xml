@@ -1,14 +1,23 @@
 <idea-plugin>
     <id>com.github.aarcangeli.esj</id>
-    <name>WIP Serious Engine .es File Support 4 the IntelliJ Platform</name>
+    <name>Serious Engine 1 .es File Support</name>
     <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="alessandroarcangeli.rm@gmail.com" url="https://github.com/aarcangeli">Alessandro Arcangeli</vendor>
 
     <description><![CDATA[
-      Provides support for reading and writing entity classes
+      Provides support for reading and writing entity classes<br>
+      <a href="https://github.com/aarcangeli/ES-intellij-plugin">Source Code</a>
     ]]></description>
 
-    <change-notes>Never released</change-notes>
+    <change-notes><![CDATA[
+        <b>Version 0.0.1</b>
+        <ul>
+            <li>Syntax highlighting
+            <li>Code References
+            <li>Find Usages
+            <li>Go To Class
+        </ul>
+    ]]></change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="171.0"/>
