@@ -2,9 +2,9 @@ package com.github.aarcangeli.esj.psi.composite;
 
 import com.github.aarcangeli.esj.icons.CIcons;
 import com.github.aarcangeli.esj.psi.CElementTypes;
-import com.github.aarcangeli.esj.psi.SeClass;
-import com.github.aarcangeli.esj.psi.SeFile;
-import com.github.aarcangeli.esj.psi.SeMember;
+import com.github.aarcangeli.esj.psi.EsEvent;
+import com.github.aarcangeli.esj.psi.EsFile;
+import com.github.aarcangeli.esj.psi.EsFileMember;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.ResolveState;
@@ -16,9 +16,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeClassImpl extends CAbstractNamedIdentifier implements PsiNameIdentifierOwner, SeClass {
-    public SeClassImpl() {
-        super(CElementTypes.SE_CLASS_STATEMENT);
+public class EsEventImpl extends CAbstractNamedIdentifier implements PsiNameIdentifierOwner, EsFileMember, EsEvent {
+    public EsEventImpl() {
+        super(CElementTypes.SE_EVENT_STATEMENT);
     }
 
     @Override
@@ -28,28 +28,27 @@ public class SeClassImpl extends CAbstractNamedIdentifier implements PsiNameIden
     }
 
     @Override
-    public SeMember[] getAllMembers() {
-        List<SeMember> members = new ArrayList<>();
+    public EsFile getContainingFile() {
+        return (EsFile) super.getContainingFile();
+    }
+
+    EsEventField[] getFields() {
+        List<EsEventField> members = new ArrayList<>();
         for (PsiElement child : getChildren()) {
             for (PsiElement child2 : child.getChildren()) {
-                if (child2 instanceof SeMember) {
-                    members.add((SeMember) child2);
+                if (child2 instanceof EsEventField) {
+                    members.add((EsEventField) child2);
                 }
             }
         }
-        return members.toArray(SeMember.EMPTY_ARRAY);
-    }
-
-    @Override
-    public SeFile getContainingFile() {
-        return (SeFile) super.getContainingFile();
+        return members.toArray(EsEventField.EMPTY_ARRAY);
     }
 
     @Override
     public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
-        for (SeMember member : getAllMembers()) {
-            if (member == lastParent) continue;
-            if (!processor.execute(member, state)) return false;
+        for (EsEventField field : getFields()) {
+            if (field == lastParent) continue;
+            if (!processor.execute(field, state)) return false;
         }
         return true;
     }

@@ -6,8 +6,8 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
 
-public class SeClassSuperReference extends CompositePsiElement {
-    public SeClassSuperReference() {
+public class EsClassSuperReference extends CompositePsiElement {
+    public EsClassSuperReference() {
         super(CElementTypes.SE_CLASS_SUPER_REF);
     }
 

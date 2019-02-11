@@ -32,16 +32,16 @@ public class CFindUsageProvider implements FindUsagesProvider {
     @Override
     @NotNull
     public String getType(@NotNull PsiElement psiElement) {
-        if (psiElement instanceof CEventStatement) return "event";
-        if (psiElement instanceof CEventSpecification) return "field";
-        if (psiElement instanceof CEventField) return "event";
-        if (psiElement instanceof CEnumStatement) return "enum";
-        if (psiElement instanceof CEnumField) return "enum";
-        if (psiElement instanceof CProcedure) return "procedure";
-        if (psiElement instanceof CFunction) return "function";
-        if (psiElement instanceof CPropertyField) return "property";
-        if (psiElement instanceof SeClassImpl) return "class";
-        if (psiElement instanceof CComponentField) return "component";
+        if (psiElement instanceof EsEventImpl) return "event";
+        if (psiElement instanceof EsEventSpecificationImpl) return "field";
+        if (psiElement instanceof EsEventField) return "event";
+        if (psiElement instanceof EsEnumImpl) return "enum";
+        if (psiElement instanceof EsEnumField) return "enum";
+        if (psiElement instanceof EsProcedureImpl) return "procedure";
+        if (psiElement instanceof EsFunctionImpl) return "function";
+        if (psiElement instanceof EsPropertyImpl) return "property";
+        if (psiElement instanceof EsClassImpl) return "class";
+        if (psiElement instanceof EsComponentImpl) return "component";
         return "type";
     }
 

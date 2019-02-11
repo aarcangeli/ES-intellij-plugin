@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CFile extends PsiFileBase implements SeFile {
+public class CFile extends PsiFileBase implements EsFile {
     public CFile(FileViewProvider viewProvider) {
         super(viewProvider, CLanguage.INSTANCE);
     }
@@ -30,19 +30,19 @@ public class CFile extends PsiFileBase implements SeFile {
     }
 
     @Override
-    public SeFileMember[] getMembers() {
-        List<SeFileMember> members = new ArrayList<>();
+    public EsFileMember[] getMembers() {
+        List<EsFileMember> members = new ArrayList<>();
         for (PsiElement child : getChildren()) {
-            if (child instanceof SeFileMember) {
-                members.add((SeFileMember) child);
+            if (child instanceof EsFileMember) {
+                members.add((EsFileMember) child);
             }
         }
-        return members.toArray(SeFileMember.EMPTY_ARRAY);
+        return members.toArray(EsFileMember.EMPTY_ARRAY);
     }
 
     @Override
     public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
-        for (SeFileMember member : getMembers()) {
+        for (EsFileMember member : getMembers()) {
             if (member == lastParent) continue;
             if (!processor.execute(member, state)) return false;
         }

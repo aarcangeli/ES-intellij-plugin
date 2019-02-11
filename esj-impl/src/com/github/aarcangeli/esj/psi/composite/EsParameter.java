@@ -4,10 +4,10 @@ import com.github.aarcangeli.esj.psi.CElementTypes;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
 
-public class CParameter extends CAbstractNamedIdentifier implements PsiNameIdentifierOwner {
-    public static CParameter[] EMPTY = new CParameter[0];
+public class EsParameter extends CAbstractNamedIdentifier implements PsiNameIdentifierOwner {
+    public static EsParameter[] EMPTY = new EsParameter[0];
 
-    public CParameter() {
+    public EsParameter() {
         super(CElementTypes.SE_PARAMETER);
     }
 

@@ -1,8 +1,8 @@
 package com.github.aarcangeli.esj.index;
 
 import com.github.aarcangeli.esj.CFileType;
-import com.github.aarcangeli.esj.psi.SeFile;
-import com.github.aarcangeli.esj.psi.SeFileMember;
+import com.github.aarcangeli.esj.psi.EsFile;
+import com.github.aarcangeli.esj.psi.EsFileMember;
 import com.intellij.util.indexing.*;
 import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
@@ -36,7 +36,7 @@ public class CNameIndex extends ScalarIndexExtension<String> {
     public DataIndexer<String, Void, FileContent> getIndexer() {
         return content -> {
             Map<String, Void> result = new THashMap<>();
-            for (SeFileMember member : ((SeFile) content.getPsiFile()).getMembers()) {
+            for (EsFileMember member : ((EsFile) content.getPsiFile()).getMembers()) {
                 result.put(member.getName(), null);
             }
             return result;

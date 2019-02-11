@@ -35,7 +35,7 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
             @Override
             public boolean execute(@NotNull PsiElement element1, @NotNull ResolveState state) {
                 if (element1 instanceof CAbstractNamedIdentifier) {
-                    if (onlyClasses && !(element1 instanceof SeClass)) return true;
+                    if (onlyClasses && !(element1 instanceof EsClass)) return true;
                     if (Objects.equals(((CAbstractNamedIdentifier) element1).getName(), name)) {
                         resolved = element1;
                         return false;

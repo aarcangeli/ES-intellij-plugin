@@ -1,7 +1,7 @@
 package com.github.aarcangeli.esj;
 
 import com.github.aarcangeli.esj.psi.CElementTypes;
-import com.github.aarcangeli.esj.psi.SeClass;
+import com.github.aarcangeli.esj.psi.EsClass;
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
 import com.github.aarcangeli.esj.utils.PsiUtils;
 import com.intellij.codeInsight.completion.*;
@@ -43,7 +43,7 @@ public class CCompletionContributor extends CompletionContributor {
                 @Override
                 public boolean execute(@NotNull PsiElement element, @NotNull ResolveState state) {
                     if (element instanceof CAbstractNamedIdentifier) {
-                        if (onlyClasses && !(element instanceof SeClass)) return true;
+                        if (onlyClasses && !(element instanceof EsClass)) return true;
                         result.consume(LookupElementBuilder.create((CAbstractNamedIdentifier) element));
                     }
                     return true;

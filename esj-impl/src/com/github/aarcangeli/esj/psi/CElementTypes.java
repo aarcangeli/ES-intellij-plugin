@@ -31,23 +31,23 @@ public interface CElementTypes extends CTokens {
     IElementType SE_CPP_BLOCK = new CCompositeElementType("SE_CPP_BLOCK");
 
     // types
-    IElementType SE_TYPE = new CCompositeElementType("SE_TYPE", CType.class);
+    IElementType SE_TYPE = new CCompositeElementType("SE_TYPE", EsType.class);
     IElementType SE_TYPE_MODIFIERS = new CCompositeElementType("SE_TYPE_MODIFIERS");
 
     // use statement
     IElementType SE_USE_STATEMENT = new CCompositeElementType("SE_USE_STATEMENT", CUseStatement.class);
 
     // event statement
-    IElementType SE_EVENT_STATEMENT = new CCompositeElementType("SE_EVENT_STATEMENT", CEventStatement.class);
-    IElementType SE_EVENT_FIELD = new CCompositeElementType("SE_EVENT_FIELD", CEventField.class);
+    IElementType SE_EVENT_STATEMENT = new CCompositeElementType("SE_EVENT_STATEMENT", EsEventImpl.class);
+    IElementType SE_EVENT_FIELD = new CCompositeElementType("SE_EVENT_FIELD", EsEventField.class);
 
     // enums
-    IElementType SE_ENUM_STATEMENT = new CCompositeElementType("SE_ENUM_STATEMENT", CEnumStatement.class);
-    IElementType SE_ENUM_FIELD = new CCompositeElementType("SE_ENUM_FIELD", CEnumField.class);
+    IElementType SE_ENUM_STATEMENT = new CCompositeElementType("SE_ENUM_STATEMENT", EsEnumImpl.class);
+    IElementType SE_ENUM_FIELD = new CCompositeElementType("SE_ENUM_FIELD", EsEnumField.class);
 
     // class
-    IElementType SE_CLASS_STATEMENT = new CCompositeElementType("SE_CLASS_STATEMENT", SeClassImpl.class);
-    IElementType SE_CLASS_SUPER_REF = new CCompositeElementType("SE_CLASS_SUPER_REF", SeClassSuperReference.class);
+    IElementType SE_CLASS_STATEMENT = new CCompositeElementType("SE_CLASS_STATEMENT", EsClassImpl.class);
+    IElementType SE_CLASS_SUPER_REF = new CCompositeElementType("SE_CLASS_SUPER_REF", EsClassSuperReference.class);
     IElementType SE_CLASS_ATTRIBUTE = new CCompositeElementType("SE_CLASS_ATTRIBUTE");
 
     IElementType SE_PROPERTIES_BLOCK = new CCompositeElementType("SE_PROPERTIES_BLOCK");
@@ -55,7 +55,7 @@ public interface CElementTypes extends CTokens {
     IElementType SE_FUNCTIONS_BLOCK = new CCompositeElementType("SE_FUNCTIONS_BLOCK");
     IElementType SE_PROCEDURES_BLOCK = new CCompositeElementType("SE_PROCEDURES_BLOCK");
 
-    IElementType SE_PROPERTY_FIELD = new CCompositeElementType("SE_PROPERTY_FIELD", CPropertyField.class);
+    IElementType SE_PROPERTY_FIELD = new CCompositeElementType("SE_PROPERTY_FIELD", EsPropertyImpl.class);
     IElementType SE_PROPERTY_WED = new CCompositeElementType("SE_PROPERTY_WED");
     IElementType SE_PROPERTY_SHORTCUT = new CCompositeElementType("SE_PROPERTY_SHORTCUT");
     IElementType SE_PROPERTY_COLOR = new CCompositeElementType("SE_PROPERTY_COLOR");
@@ -63,16 +63,16 @@ public interface CElementTypes extends CTokens {
     IElementType SE_INTERNAL_PROPERTY_BLOCK = new CCompositeElementType("SE_INTERNAL_PROPERTY_BLOCK");
     IElementType SE_INTERNAL_PROPERTY = new CCompositeElementType("SE_INTERNAL_PROPERTY");
 
-    IElementType SE_COMPONENT_FIELD = new CCompositeElementType("SE_COMPONENT_FIELD", CComponentField.class);
+    IElementType SE_COMPONENT_FIELD = new CCompositeElementType("SE_COMPONENT_FIELD", EsComponentImpl.class);
 
-    IElementType SE_FUNCTION = new CCompositeElementType("SE_FUNCTION", CFunction.class);
+    IElementType SE_FUNCTION = new CCompositeElementType("SE_FUNCTION", EsFunctionImpl.class);
     IElementType SE_FUNCTION_MODIFIERS = new CCompositeElementType("SE_FUNCTION_MODIFIERS");
     IElementType SE_PARAMETER_LIST = new CCompositeElementType("SE_PARAMETER_LIST");
-    IElementType SE_PARAMETER = new CCompositeElementType("SE_PARAMETER", CParameter.class);
+    IElementType SE_PARAMETER = new CCompositeElementType("SE_PARAMETER", EsParameter.class);
 
-    IElementType SE_PROCEDURE = new CCompositeElementType("SE_PROCEDURE", CProcedure.class);
+    IElementType SE_PROCEDURE = new CCompositeElementType("SE_PROCEDURE", EsProcedureImpl.class);
     IElementType SE_PROCEDURE_OVERRIDE = new CCompositeElementType("SE_PROCEDURE_OVERRIDE");
-    IElementType SE_EVENT_SPECIFICATION = new CCompositeElementType("SE_EVENT_SPECIFICATION", CEventSpecification.class);
+    IElementType SE_EVENT_SPECIFICATION = new CCompositeElementType("SE_EVENT_SPECIFICATION", EsEventSpecificationImpl.class);
 
     IElementType SE_CODE_BLOCK = new CCompositeElementType("SE_CODE_BLOCK");
 

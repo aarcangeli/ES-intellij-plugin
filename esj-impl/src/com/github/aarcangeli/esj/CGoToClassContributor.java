@@ -1,7 +1,7 @@
 package com.github.aarcangeli.esj;
 
-import com.github.aarcangeli.esj.psi.SeFile;
-import com.github.aarcangeli.esj.psi.SeFileMember;
+import com.github.aarcangeli.esj.psi.EsFile;
+import com.github.aarcangeli.esj.psi.EsFileMember;
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
@@ -21,7 +21,7 @@ public class CGoToClassContributor implements ChooseByNameContributor {
     public String[] getNames(Project project, boolean includeNonProjectItems) {
         return getAllSymbolsInProgect(project)
                 .stream()
-                .map(SeFileMember::getName)
+                .map(EsFileMember::getName)
                 .filter(Objects::nonNull)
                 .toArray(String[]::new);
     }
@@ -35,11 +35,11 @@ public class CGoToClassContributor implements ChooseByNameContributor {
                 .toArray(NavigationItem[]::new);
     }
 
-    List<SeFileMember> getAllSymbolsInProgect(Project project) {
-        List<SeFileMember> result = new ArrayList<>();
+    List<EsFileMember> getAllSymbolsInProgect(Project project) {
+        List<EsFileMember> result = new ArrayList<>();
         ProjectRootManager.getInstance(project).getFileIndex().iterateContent(virtualFile -> {
             if (virtualFile.getFileType() == CFileType.INSTANCE) {
-                SeFile file = (SeFile) PsiManager.getInstance(project).findFile(virtualFile);
+                EsFile file = (EsFile) PsiManager.getInstance(project).findFile(virtualFile);
                 if (file != null) {
                     result.addAll(Arrays.asList(file.getMembers()));
                 }
