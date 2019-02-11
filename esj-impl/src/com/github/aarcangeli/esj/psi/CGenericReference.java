@@ -1,11 +1,8 @@
 package com.github.aarcangeli.esj.psi;
 
-import com.github.aarcangeli.esj.CFileType;
 import com.github.aarcangeli.esj.psi.composite.CAbstractNamedIdentifier;
 import com.github.aarcangeli.esj.utils.PsiUtils;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.scope.BaseScopeProcessor;
@@ -29,23 +26,12 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
     @Nullable
     public PsiElement resolve() {
         resolved = null;
-        if (!findInside(getElement())) return resolved;
-        Project project = getElement().getProject();
-        ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        fileIndex.iterateContent(virtualFile -> {
-            if (virtualFile.getFileType() == CFileType.INSTANCE) {
-                PsiFile itFile = PsiManager.getInstance(project).findFile(virtualFile);
-                if (itFile != null) {
-                    return findInside(itFile);
-                }
-            }
-            return true;
-        });
+        findInside(getElement());
         return resolved;
     }
 
-    private boolean findInside(PsiElement element) {
-        return PsiUtils.processDeclarations(element, new BaseScopeProcessor() {
+    private void findInside(PsiElement element) {
+        PsiUtils.processDeclarations(element, new BaseScopeProcessor() {
             @Override
             public boolean execute(@NotNull PsiElement element1, @NotNull ResolveState state) {
                 if (element1 instanceof CAbstractNamedIdentifier) {
@@ -56,6 +42,14 @@ public class CGenericReference extends PsiReferenceBase<PsiElement> {
                     }
                 }
                 return true;
+            }
+
+            @Override
+            public <T> T getHint(@NotNull Key<T> hintKey) {
+                if (hintKey == PsiUtils.PSI_NAME) {
+                    return (T) name;
+                }
+                return super.getHint(hintKey);
             }
         });
     }

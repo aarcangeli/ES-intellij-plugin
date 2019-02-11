@@ -6,6 +6,8 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
@@ -74,5 +76,11 @@ public class CAbstractNamedIdentifier extends CompositePsiElement implements Psi
                 return icon;
             }
         };
+    }
+
+    @NotNull
+    @Override
+    public SearchScope getUseScope() {
+        return GlobalSearchScope.FilesScope.projectScope(getProject());
     }
 }

@@ -39,6 +39,9 @@
         <!-- Code completition (Ctrl+Space) -->
         <completion.contributor language="SE1-ES" implementationClass="com.github.aarcangeli.esj.CCompletionContributor"/>
 
+        <!-- Index every with with its members -->
+        <fileBasedIndex implementation="com.github.aarcangeli.esj.index.CNameIndex"/>
+
     </extensions>
 
     <!-- CLion and Android Studio -->

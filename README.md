@@ -18,7 +18,6 @@ This is an unofficial plugin for IntelliJ based products that provide an easier 
 ![Go To Class](docs/gifs/goto-class.gif)
 
 ### Known issues
-  - There aren't any type of index
   - Method body expression's are not fully parsed
   - Code completion at 80% suggests non-compiling code
   - Psi reference does not resolve c++ references

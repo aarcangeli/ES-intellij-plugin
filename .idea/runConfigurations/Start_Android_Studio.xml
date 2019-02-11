@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Start Android Studio" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
     <module name="ES-intellij-plugin" />
-    <option name="VM_PARAMETERS" value="-Xmx1024m -Xms256m -ea" />
+    <option name="VM_PARAMETERS" value="-Xmx2048m -Xms256m -ea" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <alternative-path path="Android Studio" alternative-path-enabled="true" />
     <predefined_log_file enabled="true" id="idea.log" />
